@@ -11,6 +11,17 @@ export const Route = createFileRoute("/$locale")({
     }
     return { locale: params.locale }
   },
+  head: ({ params }) => {
+    const locale = isLocale(params.locale) ? params.locale : "en"
+    return {
+      meta: [
+        {
+          property: "og:locale",
+          content: locale === "ko" ? "ko_KR" : "en_US",
+        },
+      ],
+    }
+  },
   component: LocaleLayout,
 })
 

@@ -48,6 +48,11 @@ export function serializeLocaleCookie(locale: Locale): string {
   return `${LOCALE_COOKIE_NAME}=${locale}; path=/; max-age=${LOCALE_COOKIE_MAX_AGE}; SameSite=Lax`
 }
 
+export function pickLocaleFromPathname(pathname: string): Locale {
+  const first = pathname.split("/").filter(Boolean)[0]
+  return isLocale(first) ? first : DEFAULT_LOCALE
+}
+
 export function swapLocaleInPath(
   pathname: string,
   nextLocale: Locale,

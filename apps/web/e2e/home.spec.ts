@@ -15,7 +15,7 @@ test.describe("home page", () => {
 
   test("uses the configured document title", async ({ page }) => {
     await page.goto("/")
-    await expect(page).toHaveTitle("TanStack Start Starter")
+    await expect(page).toHaveTitle("Meoru Butler")
   })
 
   test("returns a 404 page for unknown routes", async ({ page }) => {

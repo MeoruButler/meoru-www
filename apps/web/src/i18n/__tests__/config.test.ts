@@ -8,6 +8,7 @@ import {
   parseLocale,
   parseLocaleFromCookie,
   parseLocaleFromCookieString,
+  pickLocaleFromPathname,
   resolveLocale,
   serializeLocaleCookie,
   SUPPORTED_LOCALES,
@@ -98,6 +99,20 @@ describe("i18n/config", () => {
       expect(cookie).toContain(`max-age=${LOCALE_COOKIE_MAX_AGE}`)
       expect(cookie).toContain("SameSite=Lax")
       expect(cookie).toContain("path=/")
+    })
+  })
+
+  describe("pickLocaleFromPathname", () => {
+    it("returns the first segment when it is a supported locale", () => {
+      expect(pickLocaleFromPathname("/ko")).toBe("ko")
+      expect(pickLocaleFromPathname("/ko/links")).toBe("ko")
+      expect(pickLocaleFromPathname("/en")).toBe("en")
+    })
+
+    it("falls back to the default locale otherwise", () => {
+      expect(pickLocaleFromPathname("/")).toBe("en")
+      expect(pickLocaleFromPathname("")).toBe("en")
+      expect(pickLocaleFromPathname("/somewhere")).toBe("en")
     })
   })
 
