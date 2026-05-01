@@ -5,11 +5,19 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "lint": "turbo lint",
+    "start": "turbo start",
+    "lint": "oxlint && turbo lint",
+    "lint:fix": "oxlint --fix && turbo lint:fix",
+    "lint:oxc": "oxlint",
     "format": "turbo format",
-    "typecheck": "turbo typecheck"
+    "format:check": "prettier --check . && turbo format:check",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "test:e2e": "turbo test:e2e",
+    "clean": "turbo clean && rm -rf node_modules/.cache .turbo"
   },
   "devDependencies": {
+    "oxlint": "^1.62.0",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "turbo": "^2.8.17",
