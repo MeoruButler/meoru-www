@@ -2,6 +2,8 @@ import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router"
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools"
 
 import appCss from "@workspace/ui/globals.css?url"
+import { ThemeProvider } from "@/theme/theme-provider"
+import { themeInitScript } from "@/theme/theme-config"
 
 export const head = () => ({
   meta: [
@@ -41,15 +43,18 @@ export const Route = createRootRoute({
 
 export function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>
-        {children}
-        {import.meta.env.DEV && (
-          <TanStackRouterDevtools position="bottom-right" />
-        )}
+        <ThemeProvider>
+          {children}
+          {import.meta.env.DEV && (
+            <TanStackRouterDevtools position="bottom-right" />
+          )}
+        </ThemeProvider>
         <Scripts />
       </body>
     </html>
