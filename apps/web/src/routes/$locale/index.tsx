@@ -1,4 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
+import { ArrowUpRight } from "lucide-react"
+import { buttonVariants } from "@workspace/ui/components/button"
+import { cn } from "@workspace/ui/lib/utils"
 import { TweetEmbed } from "@/components/twitter/tweet-embed"
 import { useT } from "@/i18n/use-locale"
 
@@ -22,6 +25,15 @@ export function LocaleHome() {
         <p className="text-muted-foreground mt-3 text-base">
           {t.hero.subtitle}
         </p>
+        <a
+          href="https://x.com/Meoru_butler"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cn(buttonVariants({ variant: "default" }), "mt-6")}
+        >
+          {t.hero.cta}
+          <ArrowUpRight className="ms-1 h-4 w-4" aria-hidden="true" />
+        </a>
       </section>
       <section className="grid gap-6 md:grid-cols-2">
         {HERO_TWEETS.map((tweet) => (

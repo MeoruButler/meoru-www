@@ -28,6 +28,12 @@ export const ko: Messages = {
   hero: {
     title: "머루집사",
     subtitle: "@Meoru_butler 개인 사이트",
+    cta: "X에서 팔로우",
+  },
+  linksPage: {
+    title: "링크",
+    description: "여러 채널에서 머루집사를 만나보세요.",
+    twitter: "X / 트위터",
   },
   notFound: {
     title: "404",

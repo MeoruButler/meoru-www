@@ -26,6 +26,12 @@ export const en = {
   hero: {
     title: "Meoru Butler",
     subtitle: "Personal site of @Meoru_butler",
+    cta: "Follow on X",
+  },
+  linksPage: {
+    title: "Links",
+    description: "Where to find me around the web.",
+    twitter: "X / Twitter",
   },
   notFound: {
     title: "404",

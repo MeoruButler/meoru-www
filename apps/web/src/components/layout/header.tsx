@@ -19,7 +19,10 @@ export function Header() {
   const t = useT()
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  const navLinks = [{ to: "/$locale" as const, label: t.nav.home }]
+  const navLinks = [
+    { to: "/$locale" as const, label: t.nav.home },
+    { to: "/$locale/links" as const, label: t.nav.links },
+  ]
 
   return (
     <header className="bg-background/80 sticky top-0 z-40 border-b backdrop-blur">
