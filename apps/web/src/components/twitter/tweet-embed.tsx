@@ -40,7 +40,7 @@ export function TweetEmbed({ tweetId, username }: TweetEmbedProps) {
       ref={containerRef}
       data-testid="tweet-embed"
       data-tweet-id={tweetId}
-      className="min-h-[180px]"
+      className="min-h-[180px] overflow-hidden [&_a]:break-all"
     />
   )
 }
