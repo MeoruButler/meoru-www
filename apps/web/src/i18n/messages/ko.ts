@@ -1,6 +1,10 @@
 import type { Messages } from "./en"
 
 export const ko: Messages = {
+  brand: {
+    name: "머루집사",
+    handle: "@Meoru_butler",
+  },
   nav: {
     home: "홈",
     links: "링크",
@@ -19,11 +23,11 @@ export const ko: Messages = {
     ko: "한국어",
   },
   footer: {
-    copyright: "© meoru",
+    copyright: "© 머루집사",
   },
   hero: {
-    title: "메오루",
-    subtitle: "개인 사이트",
+    title: "머루집사",
+    subtitle: "@Meoru_butler 개인 사이트",
   },
   notFound: {
     title: "404",

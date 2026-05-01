@@ -14,7 +14,9 @@ test.describe("locale routing", () => {
     const page = await ctx.newPage()
     await page.goto("/")
     await expect(page).toHaveURL(/\/en\/?$/)
-    await expect(page.getByRole("heading", { name: "meoru" })).toBeVisible()
+    await expect(
+      page.getByRole("heading", { name: "Meoru Butler" }),
+    ).toBeVisible()
     await ctx.close()
   })
 
@@ -25,7 +27,9 @@ test.describe("locale routing", () => {
     const page = await ctx.newPage()
     await page.goto("/")
     await expect(page).toHaveURL(/\/ko\/?$/)
-    await expect(page.getByRole("heading", { name: "메오루" })).toBeVisible()
+    await expect(
+      page.getByRole("heading", { name: "머루집사" }),
+    ).toBeVisible()
     await ctx.close()
   })
 
@@ -44,14 +48,18 @@ test.describe("locale routing", () => {
 
   test("renders the Korean hero on /ko", async ({ page }) => {
     await page.goto("/ko")
-    await expect(page.getByRole("heading", { name: "메오루" })).toBeVisible()
-    await expect(page.getByText("개인 사이트")).toBeVisible()
+    await expect(
+      page.getByRole("heading", { name: "머루집사" }),
+    ).toBeVisible()
+    await expect(page.getByText("@Meoru_butler 개인 사이트")).toBeVisible()
   })
 
   test("renders the English hero on /en", async ({ page }) => {
     await page.goto("/en")
-    await expect(page.getByRole("heading", { name: "meoru" })).toBeVisible()
-    await expect(page.getByText("Personal site")).toBeVisible()
+    await expect(
+      page.getByRole("heading", { name: "Meoru Butler" }),
+    ).toBeVisible()
+    await expect(page.getByText("Personal site of @Meoru_butler")).toBeVisible()
   })
 
   test("returns a 404 for an unsupported locale", async ({ page }) => {

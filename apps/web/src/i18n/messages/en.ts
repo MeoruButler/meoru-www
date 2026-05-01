@@ -1,4 +1,8 @@
 export const en = {
+  brand: {
+    name: "Meoru Butler",
+    handle: "@Meoru_butler",
+  },
   nav: {
     home: "Home",
     links: "Links",
@@ -17,11 +21,11 @@ export const en = {
     ko: "Korean",
   },
   footer: {
-    copyright: "© meoru",
+    copyright: "© Meoru Butler",
   },
   hero: {
-    title: "meoru",
-    subtitle: "Personal site",
+    title: "Meoru Butler",
+    subtitle: "Personal site of @Meoru_butler",
   },
   notFound: {
     title: "404",

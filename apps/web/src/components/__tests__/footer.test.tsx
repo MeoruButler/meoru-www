@@ -17,24 +17,23 @@ beforeEach(() => {
 })
 
 describe("Footer", () => {
-  it("renders the copyright and the X / Twitter link", () => {
+  it("renders the English copyright and the Twitter handle link", () => {
     render(
       <LocaleProvider locale="en">
         <Footer />
       </LocaleProvider>,
     )
-    expect(screen.getByText("© meoru")).toBeInTheDocument()
-    expect(
-      screen.getByRole("link", { name: /twitter/i }),
-    ).toBeInTheDocument()
+    expect(screen.getByText("© Meoru Butler")).toBeInTheDocument()
+    const link = screen.getByRole("link", { name: "@Meoru_butler" })
+    expect(link).toHaveAttribute("href", "https://x.com/Meoru_butler")
   })
 
-  it("renders the copyright in Korean too", () => {
+  it("renders the Korean copyright", () => {
     render(
       <LocaleProvider locale="ko">
         <Footer />
       </LocaleProvider>,
     )
-    expect(screen.getByText("© meoru")).toBeInTheDocument()
+    expect(screen.getByText("© 머루집사")).toBeInTheDocument()
   })
 })

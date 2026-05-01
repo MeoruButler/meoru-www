@@ -55,9 +55,9 @@ describe("LocaleProvider + useLocale + useT", () => {
       </LocaleProvider>,
     )
     expect(screen.getByTestId("locale").textContent).toBe("en")
-    expect(screen.getByTestId("hero-title").textContent).toBe("meoru")
+    expect(screen.getByTestId("hero-title").textContent).toBe("Meoru Butler")
     expect(screen.getByTestId("t-hero-subtitle").textContent).toBe(
-      "Personal site",
+      "Personal site of @Meoru_butler",
     )
   })
 
@@ -68,9 +68,9 @@ describe("LocaleProvider + useLocale + useT", () => {
       </LocaleProvider>,
     )
     expect(screen.getByTestId("locale").textContent).toBe("ko")
-    expect(screen.getByTestId("hero-title").textContent).toBe("메오루")
+    expect(screen.getByTestId("hero-title").textContent).toBe("머루집사")
     expect(screen.getByTestId("t-hero-subtitle").textContent).toBe(
-      "개인 사이트",
+      "@Meoru_butler 개인 사이트",
     )
   })
 

@@ -29,7 +29,7 @@ export function Header() {
           params={{ locale }}
           className="text-lg font-semibold"
         >
-          meoru
+          {t.brand.name}
         </Link>
 
         <nav
@@ -62,7 +62,7 @@ export function Header() {
             </SheetTrigger>
             <SheetContent side="right">
               <SheetHeader>
-                <SheetTitle>meoru</SheetTitle>
+                <SheetTitle>{t.brand.name}</SheetTitle>
               </SheetHeader>
               <nav
                 aria-label={t.nav.primaryNav}

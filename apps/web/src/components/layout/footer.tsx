@@ -7,12 +7,12 @@ export function Footer() {
       <div className="container mx-auto flex items-center justify-between gap-4 px-4 py-6 text-sm text-muted-foreground">
         <span>{t.footer.copyright}</span>
         <a
-          href="https://x.com/meorudayo"
+          href="https://x.com/Meoru_butler"
           target="_blank"
           rel="noopener noreferrer"
           className="hover:text-foreground"
         >
-          X / Twitter
+          {t.brand.handle}
         </a>
       </div>
     </footer>

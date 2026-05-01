@@ -15,11 +15,13 @@ test.describe("layout", () => {
       page,
     }) => {
       await gotoHydrated(page, "/en")
-      await expect(page.getByRole("link", { name: "meoru" })).toBeVisible()
+      await expect(
+        page.getByRole("link", { name: "Meoru Butler" }),
+      ).toBeVisible()
       await expect(
         page.getByRole("link", { name: "Home", exact: true }),
       ).toBeVisible()
-      await expect(page.getByText("© meoru")).toBeVisible()
+      await expect(page.getByText("© Meoru Butler")).toBeVisible()
     })
 
     test("toggles the dark class through the theme menu", async ({ page }) => {
@@ -43,7 +45,9 @@ test.describe("layout", () => {
       await page.getByRole("button", { name: "Language" }).first().click()
       await page.getByRole("menuitem", { name: "Korean" }).click()
       await expect(page).toHaveURL(/\/ko\/?$/)
-      await expect(page.getByRole("heading", { name: "메오루" })).toBeVisible()
+      await expect(
+        page.getByRole("heading", { name: "머루집사" }),
+      ).toBeVisible()
     })
   })
 
