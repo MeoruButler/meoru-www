@@ -21,3 +21,22 @@ PascalCase, camelCase, snake_case 파일명은 사용하지 않습니다.
 - **도구가 지정한 설정 파일**: `package.json`, `tsconfig.json`, `vite.config.ts`, `vitest.config.ts`, `playwright.config.ts`, `eslint.config.js` 등
 - **자동 생성 파일**: `routeTree.gen.ts` 등 `*.gen.*` 산출물
 - **TanStack Router 특수 파일**: `__root.tsx`, `-index.tsx`처럼 prefix(`__`, `-`, `_`)가 라우터에 의미를 가지는 경우
+
+## 커밋 메시지
+
+Conventional Commits 형식을 따릅니다.
+
+```
+<type>(<scope>): <동사로 시작하는 변경 내용>
+```
+
+- **type**: `feat`, `fix`, `chore`, `refactor`, `docs`, `test`, `style`, `perf`, `ci`
+- **scope**: 변경된 패키지/앱 이름 (`web`, `ui`). 레포 루트 전반에 걸친 변경이면 생략
+- **subject**: 영어 동사 원형으로 시작 (`add`, `update`, `remove`, `scaffold`, `fix` 등). 마침표 없이
+
+예시:
+
+- `chore(web): scaffold dev tooling, testing, and env validation`
+- `feat(ui): add dropdown menu component`
+- `fix(web): handle empty session in router guard`
+- `chore: add AGENTS.md with shared agent instructions`
