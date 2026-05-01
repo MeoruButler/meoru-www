@@ -1,17 +1,30 @@
-import { describe, it, expect } from "vitest"
-import { render, screen } from "@testing-library/react"
-import { App, Route } from "./index"
+import { describe, it, expect, vi, beforeEach } from "vitest"
+
+vi.mock("@/i18n/locale.server", () => ({
+  resolveDefaultLocale: vi.fn(),
+}))
+
+const { Route, indexBeforeLoad } = await import("./index")
+const { resolveDefaultLocale } = await import("@/i18n/locale.server")
 
 describe("routes/index", () => {
-  it("registers a file route", () => {
+  beforeEach(() => {
+    vi.mocked(resolveDefaultLocale).mockReset()
+  })
+
+  it("registers the redirect route", () => {
     expect(Route).toBeDefined()
   })
 
-  it("renders the App with heading and button", () => {
-    render(<App />)
-    expect(
-      screen.getByRole("heading", { name: "Project ready!" })
-    ).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: "Button" })).toBeInTheDocument()
+  it("throws a redirect to the resolved locale", async () => {
+    vi.mocked(resolveDefaultLocale).mockResolvedValue("ko" as never)
+    let thrown: unknown
+    try {
+      await indexBeforeLoad()
+    } catch (e) {
+      thrown = e
+    }
+    expect(resolveDefaultLocale).toHaveBeenCalled()
+    expect(thrown).toBeTruthy()
   })
 })

@@ -1,12 +1,16 @@
 import { test, expect } from "@playwright/test"
 
 test.describe("home page", () => {
-  test("renders the project-ready landing with a button", async ({ page }) => {
+  test.beforeEach(async ({ context }) => {
+    await context.clearCookies()
+  })
+
+  test("redirects '/' to the default locale landing", async ({ page }) => {
     await page.goto("/")
+    await expect(page).toHaveURL(/\/(en|ko)\/?$/)
     await expect(
-      page.getByRole("heading", { name: "Project ready!" })
+      page.getByRole("heading", { level: 1 }),
     ).toBeVisible()
-    await expect(page.getByRole("button", { name: "Button" })).toBeVisible()
   })
 
   test("uses the configured document title", async ({ page }) => {

@@ -21,6 +21,8 @@ export default defineConfig({
         "src/**/*.{test,spec}.{ts,tsx}",
         "src/__tests__/**",
         "src/env/**",
+        "src/routes/**",
+        "src/**/*.server.ts",
       ],
       thresholds: {
         lines: 100,
