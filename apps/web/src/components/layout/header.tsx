@@ -52,6 +52,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-1 md:hidden">
+          <LangSwitcher />
           <ThemeToggle />
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger
@@ -79,9 +80,6 @@ export function Header() {
                     {link.label}
                   </Link>
                 ))}
-                <div className="mt-2 border-t pt-4">
-                  <LangSwitcher />
-                </div>
               </nav>
             </SheetContent>
           </Sheet>

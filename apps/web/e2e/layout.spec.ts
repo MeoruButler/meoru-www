@@ -52,6 +52,20 @@ test.describe("layout", () => {
   })
 
   test.describe("mobile", () => {
+    test("exposes the language and theme toggles next to the menu button", async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 390, height: 844 })
+      await gotoHydrated(page, "/en")
+      await expect(
+        page.getByRole("button", { name: "Language" }),
+      ).toBeVisible()
+      await expect(page.getByRole("button", { name: "Theme" })).toBeVisible()
+      await expect(
+        page.getByRole("button", { name: "Open menu" }),
+      ).toBeVisible()
+    })
+
     test("hides the desktop nav and reveals the home link via the Sheet", async ({
       page,
     }) => {
