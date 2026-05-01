@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
 
-vi.mock("@/i18n/locale.server", () => ({
+vi.mock("@/i18n/locale-loader", () => ({
   resolveDefaultLocale: vi.fn(),
 }))
 
 const { Route, indexBeforeLoad } = await import("./index")
-const { resolveDefaultLocale } = await import("@/i18n/locale.server")
+const { resolveDefaultLocale } = await import("@/i18n/locale-loader")
 
 describe("routes/index", () => {
   beforeEach(() => {

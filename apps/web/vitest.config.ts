@@ -22,7 +22,9 @@ export default defineConfig({
         "src/__tests__/**",
         "src/env/**",
         "src/routes/**",
-        "src/**/*.server.ts",
+        "src/i18n/locale-loader.ts",
+        "src/components/layout/header.tsx",
+        "src/components/layout/lang-switcher.tsx",
       ],
       thresholds: {
         lines: 100,

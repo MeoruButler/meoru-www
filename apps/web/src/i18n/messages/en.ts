@@ -2,6 +2,8 @@ export const en = {
   nav: {
     home: "Home",
     links: "Links",
+    openMenu: "Open menu",
+    primaryNav: "Primary navigation",
   },
   themeToggle: {
     label: "Theme",

@@ -1,4 +1,3 @@
-import "@tanstack/react-start/server-only"
 import { createServerFn } from "@tanstack/react-start"
 import { getCookie, getRequestHeader } from "@tanstack/react-start/server"
 import { LOCALE_COOKIE_NAME, resolveLocale, type Locale } from "./config"

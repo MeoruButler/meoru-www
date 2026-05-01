@@ -4,6 +4,8 @@ export const ko: Messages = {
   nav: {
     home: "홈",
     links: "링크",
+    openMenu: "메뉴 열기",
+    primaryNav: "주 메뉴",
   },
   themeToggle: {
     label: "테마",

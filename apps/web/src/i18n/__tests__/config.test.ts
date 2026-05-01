@@ -11,6 +11,7 @@ import {
   resolveLocale,
   serializeLocaleCookie,
   SUPPORTED_LOCALES,
+  swapLocaleInPath,
 } from "../config"
 
 describe("i18n/config", () => {
@@ -97,6 +98,19 @@ describe("i18n/config", () => {
       expect(cookie).toContain(`max-age=${LOCALE_COOKIE_MAX_AGE}`)
       expect(cookie).toContain("SameSite=Lax")
       expect(cookie).toContain("path=/")
+    })
+  })
+
+  describe("swapLocaleInPath", () => {
+    it("returns just the locale segment for an empty path", () => {
+      expect(swapLocaleInPath("/", "ko")).toBe("/ko")
+      expect(swapLocaleInPath("", "en")).toBe("/en")
+    })
+
+    it("replaces the first path segment with the new locale", () => {
+      expect(swapLocaleInPath("/en", "ko")).toBe("/ko")
+      expect(swapLocaleInPath("/en/links", "ko")).toBe("/ko/links")
+      expect(swapLocaleInPath("/ko/posts/123", "en")).toBe("/en/posts/123")
     })
   })
 
