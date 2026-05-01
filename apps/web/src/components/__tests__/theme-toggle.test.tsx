@@ -62,11 +62,27 @@ describe("ThemeToggle", () => {
     expect(screen.getByRole("button", { name: "Theme" })).toBeInTheDocument()
   })
 
+  it("marks the active theme with aria-checked when the menu is open", async () => {
+    cookieValue = "theme=dark"
+    const user = userEvent.setup()
+    renderToggle()
+    await user.click(screen.getByRole("button", { name: "Theme" }))
+
+    const dark = await screen.findByRole("menuitemradio", { name: /dark/i })
+    expect(dark).toHaveAttribute("aria-checked", "true")
+    expect(
+      screen.getByRole("menuitemradio", { name: /light/i }),
+    ).toHaveAttribute("aria-checked", "false")
+    expect(
+      screen.getByRole("menuitemradio", { name: /system/i }),
+    ).toHaveAttribute("aria-checked", "false")
+  })
+
   it("applies the dark theme when 'Dark' is selected", async () => {
     const user = userEvent.setup()
     renderToggle()
     await user.click(screen.getByRole("button", { name: "Theme" }))
-    const darkItem = await screen.findByRole("menuitem", { name: /dark/i })
+    const darkItem = await screen.findByRole("menuitemradio", { name: /dark/i })
     await user.click(darkItem)
     expect(document.documentElement.classList.contains("dark")).toBe(true)
     expect(cookieValue).toContain("theme=dark")
@@ -76,7 +92,7 @@ describe("ThemeToggle", () => {
     const user = userEvent.setup()
     renderToggle()
     await user.click(screen.getByRole("button", { name: "Theme" }))
-    const lightItem = await screen.findByRole("menuitem", { name: /light/i })
+    const lightItem = await screen.findByRole("menuitemradio", { name: /light/i })
     await user.click(lightItem)
     expect(document.documentElement.classList.contains("dark")).toBe(false)
     expect(cookieValue).toContain("theme=light")
@@ -86,7 +102,7 @@ describe("ThemeToggle", () => {
     const user = userEvent.setup()
     renderToggle()
     await user.click(screen.getByRole("button", { name: "Theme" }))
-    const systemItem = await screen.findByRole("menuitem", { name: /system/i })
+    const systemItem = await screen.findByRole("menuitemradio", { name: /system/i })
     await user.click(systemItem)
     expect(cookieValue).toContain("theme=system")
   })

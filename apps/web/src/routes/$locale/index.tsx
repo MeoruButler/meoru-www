@@ -10,8 +10,8 @@ export const Route = createFileRoute("/$locale/")({
 })
 
 const HERO_TWEETS: ReadonlyArray<{ tweetId: string; username: string }> = [
-  { tweetId: "1801894734043062273", username: "Meoru_butler" },
-  { tweetId: "1738491823654617173", username: "Meoru_butler" },
+  { tweetId: "2006194214783312187", username: "Meoru_butler" },
+  { tweetId: "2049352912539926895", username: "Meoru_butler" },
 ]
 
 export function LocaleHome() {
@@ -22,7 +22,7 @@ export function LocaleHome() {
         <h1 className="text-3xl font-semibold tracking-tight">
           {t.hero.title}
         </h1>
-        <p className="text-muted-foreground mt-3 text-base">
+        <p className="mt-3 text-base text-muted-foreground">
           {t.hero.subtitle}
         </p>
         <a

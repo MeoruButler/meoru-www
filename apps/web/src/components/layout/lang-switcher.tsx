@@ -1,10 +1,10 @@
 import { useRouter, useRouterState } from "@tanstack/react-router"
-import { Languages } from "lucide-react"
 import { buttonVariants } from "@workspace/ui/components/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@workspace/ui/components/dropdown-menu"
 import { cn } from "@workspace/ui/lib/utils"
@@ -32,18 +32,24 @@ export function LangSwitcher() {
         aria-label={t.langSwitcher.label}
         className={cn(buttonVariants({ variant: "ghost", size: "icon" }))}
       >
-        <Languages className="h-4 w-4" aria-hidden="true" />
+        <span
+          aria-hidden="true"
+          className="text-xs font-semibold tracking-wider uppercase"
+        >
+          {locale}
+        </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {SUPPORTED_LOCALES.map((option) => (
-          <DropdownMenuItem
-            key={option}
-            data-active={option === locale ? "" : undefined}
-            onClick={() => switchTo(option)}
-          >
-            {t.langSwitcher[option]}
-          </DropdownMenuItem>
-        ))}
+        <DropdownMenuRadioGroup
+          value={locale}
+          onValueChange={(value) => switchTo(value as Locale)}
+        >
+          {SUPPORTED_LOCALES.map((option) => (
+            <DropdownMenuRadioItem key={option} value={option}>
+              {t.langSwitcher[option]}
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   )

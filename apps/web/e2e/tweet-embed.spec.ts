@@ -52,7 +52,7 @@ test.describe("tweet embed", () => {
     await expect(blockquote).toHaveAttribute("data-theme", "light")
 
     await page.getByRole("button", { name: "Theme" }).first().click()
-    await page.getByRole("menuitem", { name: "Dark" }).click()
+    await page.getByRole("menuitemradio", { name: "Dark" }).click()
 
     await expect(
       page
@@ -71,7 +71,7 @@ test.describe("tweet embed", () => {
     await expect(initial).toHaveAttribute("data-lang", "en")
 
     await page.getByRole("button", { name: "Language" }).first().click()
-    await page.getByRole("menuitem", { name: "Korean" }).click()
+    await page.getByRole("menuitemradio", { name: "Korean" }).click()
     await expect(page).toHaveURL(/\/ko\/?$/)
 
     await expect(

@@ -1,5 +1,7 @@
 import { test, expect, type Page } from "@playwright/test"
 
+const baseURL = `http://localhost:${process.env.E2E_PORT ?? 3000}`
+
 async function gotoHydrated(page: Page, path: string): Promise<void> {
   await page.goto(path)
   await page.waitForLoadState("networkidle")
@@ -24,18 +26,64 @@ test.describe("layout", () => {
       await expect(page.getByText("© Meoru Butler")).toBeVisible()
     })
 
-    test("toggles the dark class through the theme menu", async ({ page }) => {
+    test("applies the dark class when 'Dark' is selected", async ({
+      page,
+    }) => {
       await page.emulateMedia({ colorScheme: "light" })
       await gotoHydrated(page, "/en")
+
       await page.getByRole("button", { name: "Theme" }).first().click()
-      await page.getByRole("menuitem", { name: "Dark" }).click()
+      const darkItem = page.getByRole("menuitemradio", { name: "Dark" })
+      await expect(darkItem).toBeVisible()
+      await darkItem.click()
+      await expect(page.locator("html")).toHaveClass(/(?:^|\s)dark(?:\s|$)/)
+    })
+
+    test("returns to the light class when 'Light' is selected", async ({
+      page,
+      context,
+    }) => {
+      await context.addCookies([
+        { name: "theme", value: "dark", url: baseURL },
+      ])
+      await page.emulateMedia({ colorScheme: "light" })
+      await gotoHydrated(page, "/en")
       await expect(page.locator("html")).toHaveClass(/(?:^|\s)dark(?:\s|$)/)
 
       await page.getByRole("button", { name: "Theme" }).first().click()
-      await page.getByRole("menuitem", { name: "Light" }).click()
+      const lightItem = page.getByRole("menuitemradio", { name: "Light" })
+      await expect(lightItem).toBeVisible()
+      await lightItem.click()
       await page.waitForFunction(
         () => !document.documentElement.classList.contains("dark"),
       )
+    })
+
+    test("highlights the current selection in both menus", async ({
+      page,
+    }) => {
+      await page.emulateMedia({ colorScheme: "light" })
+      await gotoHydrated(page, "/en")
+
+      const langTrigger = page.getByRole("button", { name: "Language" }).first()
+      await expect(langTrigger).toHaveText(/en/i)
+
+      await langTrigger.click()
+      await expect(
+        page.getByRole("menuitemradio", { name: "English" }),
+      ).toHaveAttribute("aria-checked", "true")
+      await expect(
+        page.getByRole("menuitemradio", { name: "Korean" }),
+      ).toHaveAttribute("aria-checked", "false")
+      await page.keyboard.press("Escape")
+
+      await page.getByRole("button", { name: "Theme" }).first().click()
+      await expect(
+        page.getByRole("menuitemradio", { name: "System" }),
+      ).toHaveAttribute("aria-checked", "true")
+      await expect(
+        page.getByRole("menuitemradio", { name: "Dark" }),
+      ).toHaveAttribute("aria-checked", "false")
     })
 
     test("switches the URL and dictionary via the language menu", async ({
@@ -43,7 +91,7 @@ test.describe("layout", () => {
     }) => {
       await gotoHydrated(page, "/en")
       await page.getByRole("button", { name: "Language" }).first().click()
-      await page.getByRole("menuitem", { name: "Korean" }).click()
+      await page.getByRole("menuitemradio", { name: "Korean" }).click()
       await expect(page).toHaveURL(/\/ko\/?$/)
       await expect(
         page.getByRole("heading", { name: "머루집사" }),
