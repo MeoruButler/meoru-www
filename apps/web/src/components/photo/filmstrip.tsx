@@ -39,6 +39,8 @@ export function Filmstrip({
                   src={photo.thumb ?? photo.src}
                   alt=""
                   aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover"
                 />
               </button>

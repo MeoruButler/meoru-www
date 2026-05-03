@@ -51,6 +51,7 @@ export function PhotoViewer({
         alt={photo.alt}
         draggable={false}
         decoding="async"
+        fetchPriority="high"
         className="absolute inset-0 h-full w-full object-contain transition-[filter] duration-200 ease-out"
         style={{ filter: filter || undefined }}
       />
