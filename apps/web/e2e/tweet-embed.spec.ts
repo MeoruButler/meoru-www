@@ -6,7 +6,7 @@ async function stubWidgetsJs(context: BrowserContext): Promise<void> {
       status: 200,
       contentType: "application/javascript",
       body: "window.twttr = { widgets: { load: function () {} } };",
-    }),
+    })
   )
 }
 
@@ -21,11 +21,11 @@ test.describe("tweet embed", () => {
     await stubWidgetsJs(context)
   })
 
-  test("renders a blockquote for each configured tweet on the landing", async ({
+  test("renders a blockquote for each configured tweet on the posts page", async ({
     page,
   }) => {
     await page.emulateMedia({ colorScheme: "light" })
-    await gotoHydrated(page, "/en")
+    await gotoHydrated(page, "/en/posts")
 
     const embeds = page.locator("[data-testid='tweet-embed']")
     await expect(embeds).toHaveCount(2)
@@ -36,7 +36,7 @@ test.describe("tweet embed", () => {
     await expect(firstQuote).toHaveAttribute("data-theme", "light")
     await expect(firstQuote.locator("a")).toHaveAttribute(
       "href",
-      /twitter\.com\/Meoru_butler\/status\//,
+      /twitter\.com\/Meoru_butler\/status\//
     )
   })
 
@@ -44,7 +44,7 @@ test.describe("tweet embed", () => {
     page,
   }) => {
     await page.emulateMedia({ colorScheme: "light" })
-    await gotoHydrated(page, "/en")
+    await gotoHydrated(page, "/en/posts")
 
     const blockquote = page
       .locator("[data-testid='tweet-embed'] blockquote.twitter-tweet")
@@ -57,14 +57,14 @@ test.describe("tweet embed", () => {
     await expect(
       page
         .locator("[data-testid='tweet-embed'] blockquote.twitter-tweet")
-        .first(),
+        .first()
     ).toHaveAttribute("data-theme", "dark")
   })
 
   test("updates data-lang when the language menu switches to Korean", async ({
     page,
   }) => {
-    await gotoHydrated(page, "/en")
+    await gotoHydrated(page, "/en/posts")
     const initial = page
       .locator("[data-testid='tweet-embed'] blockquote.twitter-tweet")
       .first()
@@ -72,12 +72,12 @@ test.describe("tweet embed", () => {
 
     await page.getByRole("button", { name: "Language" }).first().click()
     await page.getByRole("menuitemradio", { name: "Korean" }).click()
-    await expect(page).toHaveURL(/\/ko\/?$/)
+    await expect(page).toHaveURL(/\/ko\/posts\/?$/)
 
     await expect(
       page
         .locator("[data-testid='tweet-embed'] blockquote.twitter-tweet")
-        .first(),
+        .first()
     ).toHaveAttribute("data-lang", "ko")
   })
 
@@ -90,7 +90,7 @@ test.describe("tweet embed", () => {
         requests.push(req.url())
       }
     })
-    await gotoHydrated(page, "/en")
+    await gotoHydrated(page, "/en/posts")
     expect(requests.length).toBeLessThanOrEqual(1)
   })
 })

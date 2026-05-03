@@ -21,11 +21,12 @@ export function Header() {
 
   const navLinks = [
     { to: "/$locale" as const, label: t.nav.home },
+    { to: "/$locale/posts" as const, label: t.nav.posts },
     { to: "/$locale/links" as const, label: t.nav.links },
   ]
 
   return (
-    <header className="bg-background/80 sticky top-0 z-40 border-b backdrop-blur">
+    <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
       <div className="container mx-auto flex items-center justify-between gap-4 px-4 py-3">
         <Link
           to="/$locale"
@@ -44,7 +45,7 @@ export function Header() {
               key={link.to}
               to={link.to}
               params={{ locale }}
-              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
               activeProps={{ className: "text-foreground" }}
             >
               {link.label}
@@ -78,7 +79,7 @@ export function Header() {
                     to={link.to}
                     params={{ locale }}
                     onClick={() => setMobileOpen(false)}
-                    className="text-foreground text-base"
+                    className="text-base text-foreground"
                   >
                     {link.label}
                   </Link>

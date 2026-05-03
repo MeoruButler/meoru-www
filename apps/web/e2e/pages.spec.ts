@@ -10,43 +10,33 @@ test.describe("pages", () => {
     await context.clearCookies()
   })
 
-  test("renders the English landing with hero and Follow on X CTA", async ({
+  test("renders the English landing with the gallery shell", async ({
     page,
   }) => {
     await gotoHydrated(page, "/en")
     await expect(
-      page.getByRole("heading", { name: "Meoru Butler" }),
+      page.getByRole("navigation", { name: "Collections" })
     ).toBeVisible()
-    const cta = page.getByRole("link", { name: "Follow on X" })
-    await expect(cta).toBeVisible()
-    await expect(cta).toHaveAttribute("href", "https://x.com/Meoru_butler")
+    await expect(page.getByRole("region", { name: "Filmstrip" })).toBeVisible()
+    await expect(page.getByRole("figure")).toBeVisible()
   })
 
-  test("renders the Korean landing with the localized CTA", async ({
+  test("renders the Korean landing with the localized collections label", async ({
     page,
   }) => {
     await gotoHydrated(page, "/ko")
-    await expect(
-      page.getByRole("heading", { name: "머루집사" }),
-    ).toBeVisible()
-    await expect(
-      page.getByRole("link", { name: "X에서 팔로우" }),
-    ).toBeVisible()
+    await expect(page.getByRole("navigation", { name: "컬렉션" })).toBeVisible()
+    await expect(page.getByRole("region", { name: "필름스트립" })).toBeVisible()
   })
 
   test("renders the English Links page with the Twitter entry", async ({
     page,
   }) => {
     await gotoHydrated(page, "/en/links")
-    await expect(
-      page.getByRole("heading", { name: "Links" }),
-    ).toBeVisible()
+    await expect(page.getByRole("heading", { name: "Links" })).toBeVisible()
     const twitter = page.getByRole("link", { name: /X \/ Twitter/ })
     await expect(twitter).toBeVisible()
-    await expect(twitter).toHaveAttribute(
-      "href",
-      "https://x.com/Meoru_butler",
-    )
+    await expect(twitter).toHaveAttribute("href", "https://x.com/Meoru_butler")
     await expect(twitter).toHaveAttribute("target", "_blank")
   })
 
@@ -54,9 +44,7 @@ test.describe("pages", () => {
     page,
   }) => {
     await gotoHydrated(page, "/ko/links")
-    await expect(
-      page.getByRole("heading", { name: "링크" }),
-    ).toBeVisible()
+    await expect(page.getByRole("heading", { name: "링크" })).toBeVisible()
     await expect(page.getByText("여러 채널에서")).toBeVisible()
   })
 
@@ -66,8 +54,15 @@ test.describe("pages", () => {
     await gotoHydrated(page, "/en")
     await page.getByRole("link", { name: "Links", exact: true }).click()
     await expect(page).toHaveURL(/\/en\/links\/?$/)
-    await expect(
-      page.getByRole("heading", { name: "Links" }),
-    ).toBeVisible()
+    await expect(page.getByRole("heading", { name: "Links" })).toBeVisible()
+  })
+
+  test("navigates from the header Posts nav item to /posts", async ({
+    page,
+  }) => {
+    await gotoHydrated(page, "/en")
+    await page.getByRole("link", { name: "Posts", exact: true }).click()
+    await expect(page).toHaveURL(/\/en\/posts\/?$/)
+    await expect(page.getByRole("heading", { name: "Posts" })).toBeVisible()
   })
 })

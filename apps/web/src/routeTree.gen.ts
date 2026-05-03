@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LocaleRouteImport } from './routes/$locale'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LocaleIndexRouteImport } from './routes/$locale/index'
+import { Route as LocalePostsRouteImport } from './routes/$locale/posts'
 import { Route as LocaleLinksRouteImport } from './routes/$locale/links'
 
 const LocaleRoute = LocaleRouteImport.update({
@@ -29,6 +30,11 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LocaleRoute,
 } as any)
+const LocalePostsRoute = LocalePostsRouteImport.update({
+  id: '/posts',
+  path: '/posts',
+  getParentRoute: () => LocaleRoute,
+} as any)
 const LocaleLinksRoute = LocaleLinksRouteImport.update({
   id: '/links',
   path: '/links',
@@ -39,11 +45,13 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/links': typeof LocaleLinksRoute
+  '/$locale/posts': typeof LocalePostsRoute
   '/$locale/': typeof LocaleIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$locale/links': typeof LocaleLinksRoute
+  '/$locale/posts': typeof LocalePostsRoute
   '/$locale': typeof LocaleIndexRoute
 }
 export interface FileRoutesById {
@@ -51,14 +59,26 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/links': typeof LocaleLinksRoute
+  '/$locale/posts': typeof LocalePostsRoute
   '/$locale/': typeof LocaleIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$locale' | '/$locale/links' | '/$locale/'
+  fullPaths:
+    | '/'
+    | '/$locale'
+    | '/$locale/links'
+    | '/$locale/posts'
+    | '/$locale/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$locale/links' | '/$locale'
-  id: '__root__' | '/' | '/$locale' | '/$locale/links' | '/$locale/'
+  to: '/' | '/$locale/links' | '/$locale/posts' | '/$locale'
+  id:
+    | '__root__'
+    | '/'
+    | '/$locale'
+    | '/$locale/links'
+    | '/$locale/posts'
+    | '/$locale/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -89,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
     }
+    '/$locale/posts': {
+      id: '/$locale/posts'
+      path: '/posts'
+      fullPath: '/$locale/posts'
+      preLoaderRoute: typeof LocalePostsRouteImport
+      parentRoute: typeof LocaleRoute
+    }
     '/$locale/links': {
       id: '/$locale/links'
       path: '/links'
@@ -101,11 +128,13 @@ declare module '@tanstack/react-router' {
 
 interface LocaleRouteChildren {
   LocaleLinksRoute: typeof LocaleLinksRoute
+  LocalePostsRoute: typeof LocalePostsRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleLinksRoute: LocaleLinksRoute,
+  LocalePostsRoute: LocalePostsRoute,
   LocaleIndexRoute: LocaleIndexRoute,
 }
 

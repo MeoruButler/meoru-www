@@ -15,7 +15,7 @@ test.describe("locale routing", () => {
     await page.goto("/")
     await expect(page).toHaveURL(/\/en\/?$/)
     await expect(
-      page.getByRole("heading", { name: "Meoru Butler" }),
+      page.getByRole("heading", { name: "Meoru Butler" })
     ).toBeVisible()
     await ctx.close()
   })
@@ -27,9 +27,7 @@ test.describe("locale routing", () => {
     const page = await ctx.newPage()
     await page.goto("/")
     await expect(page).toHaveURL(/\/ko\/?$/)
-    await expect(
-      page.getByRole("heading", { name: "머루집사" }),
-    ).toBeVisible()
+    await expect(page.getByRole("heading", { name: "머루집사" })).toBeVisible()
     await ctx.close()
   })
 
@@ -37,34 +35,32 @@ test.describe("locale routing", () => {
     browser,
   }) => {
     const ctx = await browser.newContext({ locale: "en-US" })
-    await ctx.addCookies([
-      { name: "locale", value: "ko", url: baseURL },
-    ])
+    await ctx.addCookies([{ name: "locale", value: "ko", url: baseURL }])
     const page = await ctx.newPage()
     await page.goto("/")
     await expect(page).toHaveURL(/\/ko\/?$/)
     await ctx.close()
   })
 
-  test("renders the Korean hero on /ko", async ({ page }) => {
+  test("renders the Korean gallery on /ko", async ({ page }) => {
     await page.goto("/ko")
-    await expect(
-      page.getByRole("heading", { name: "머루집사" }),
-    ).toBeVisible()
-    await expect(page.getByText("@Meoru_butler 개인 사이트")).toBeVisible()
+    await expect(page.getByRole("navigation", { name: "컬렉션" })).toBeVisible()
+    await expect(page.getByRole("region", { name: "필름스트립" })).toBeVisible()
   })
 
-  test("renders the English hero on /en", async ({ page }) => {
+  test("renders the English gallery on /en", async ({ page }) => {
     await page.goto("/en")
     await expect(
-      page.getByRole("heading", { name: "Meoru Butler" }),
+      page.getByRole("navigation", { name: "Collections" })
     ).toBeVisible()
-    await expect(page.getByText("Personal site of @Meoru_butler")).toBeVisible()
+    await expect(page.getByRole("region", { name: "Filmstrip" })).toBeVisible()
   })
 
   test("returns a 404 for an unsupported locale", async ({ page }) => {
     const response = await page.goto("/zz")
     expect(response?.status()).toBe(404)
-    await expect(page.getByRole("heading", { name: "404" })).toBeVisible()
+    await expect(
+      page.getByRole("heading", { name: "Reel 404 — Frame Missing" })
+    ).toBeVisible()
   })
 })

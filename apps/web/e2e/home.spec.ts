@@ -8,9 +8,7 @@ test.describe("home page", () => {
   test("redirects '/' to the default locale landing", async ({ page }) => {
     await page.goto("/")
     await expect(page).toHaveURL(/\/(en|ko)\/?$/)
-    await expect(
-      page.getByRole("heading", { level: 1 }),
-    ).toBeVisible()
+    await expect(page.getByRole("region", { name: "Filmstrip" })).toBeVisible()
   })
 
   test("uses the configured document title", async ({ page }) => {
@@ -21,6 +19,8 @@ test.describe("home page", () => {
   test("returns a 404 page for unknown routes", async ({ page }) => {
     const response = await page.goto("/this-route-does-not-exist")
     expect(response?.status()).toBe(404)
-    await expect(page.getByRole("heading", { name: "404" })).toBeVisible()
+    await expect(
+      page.getByRole("heading", { name: "Reel 404 — Frame Missing" })
+    ).toBeVisible()
   })
 })
