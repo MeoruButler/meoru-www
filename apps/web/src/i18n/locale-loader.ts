@@ -7,5 +7,5 @@ export const resolveDefaultLocale = createServerFn({ method: "GET" }).handler(
     resolveLocale({
       cookie: getCookie(LOCALE_COOKIE_NAME),
       acceptLanguage: getRequestHeader("accept-language"),
-    }),
+    })
 )

@@ -16,7 +16,7 @@ export function parseTheme(value: string | undefined): Theme {
 
 export function parseThemeFromCookie(cookieString: string): Theme {
   const match = cookieString.match(
-    new RegExp(`(?:^|; )${THEME_COOKIE_NAME}=([^;]+)`),
+    new RegExp(`(?:^|; )${THEME_COOKIE_NAME}=([^;]+)`)
   )
   if (!match) return DEFAULT_THEME
   try {
@@ -28,7 +28,7 @@ export function parseThemeFromCookie(cookieString: string): Theme {
 
 export function resolveTheme(
   theme: Theme,
-  prefersDark: boolean,
+  prefersDark: boolean
 ): ResolvedTheme {
   if (theme === "system") return prefersDark ? "dark" : "light"
   return theme

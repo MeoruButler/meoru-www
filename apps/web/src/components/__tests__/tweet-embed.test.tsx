@@ -35,7 +35,7 @@ function setupMatchMedia(matches: boolean) {
       addListener: vi.fn(),
       removeListener: vi.fn(),
       dispatchEvent: () => true,
-    }),
+    })
   )
 }
 
@@ -48,7 +48,7 @@ function renderEmbed(props: { tweetId?: string; username?: string } = {}) {
           username={props.username ?? "Meoru_butler"}
         />
       </LocaleProvider>
-    </ThemeProvider>,
+    </ThemeProvider>
   )
 }
 
@@ -72,9 +72,9 @@ describe("TweetEmbed", () => {
     expect(blockquote).not.toBeNull()
     expect(blockquote?.getAttribute("data-lang")).toBe("en")
     expect(blockquote?.getAttribute("data-theme")).toBe("light")
-    expect(
-      blockquote?.querySelector("a")?.getAttribute("href"),
-    ).toBe("https://twitter.com/Meoru_butler/status/9001")
+    expect(blockquote?.querySelector("a")?.getAttribute("href")).toBe(
+      "https://twitter.com/Meoru_butler/status/9001"
+    )
     await waitFor(() => expect(widgetsLoad).toHaveBeenCalledTimes(1))
     expect(widgetsLoad).toHaveBeenCalledWith(container)
   })
@@ -85,7 +85,7 @@ describe("TweetEmbed", () => {
         <LocaleProvider locale="en">
           <TweetEmbed tweetId="9001" username="Meoru_butler" />
         </LocaleProvider>
-      </ThemeProvider>,
+      </ThemeProvider>
     )
     await waitFor(() => expect(widgetsLoad).toHaveBeenCalledTimes(1))
 
@@ -94,7 +94,7 @@ describe("TweetEmbed", () => {
         <LocaleProvider locale="ko">
           <TweetEmbed tweetId="9001" username="Meoru_butler" />
         </LocaleProvider>
-      </ThemeProvider>,
+      </ThemeProvider>
     )
     await waitFor(() => expect(widgetsLoad).toHaveBeenCalledTimes(2))
     const blockquote = screen

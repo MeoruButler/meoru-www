@@ -1,8 +1,5 @@
 import { createContext, useEffect, useMemo } from "react"
-import {
-  serializeLocaleCookie,
-  type Locale,
-} from "./config"
+import { serializeLocaleCookie, type Locale } from "./config"
 import { messages, type Messages } from "./messages"
 
 export interface LocaleContextValue {
@@ -20,7 +17,7 @@ interface LocaleProviderProps {
 export function LocaleProvider({ locale, children }: LocaleProviderProps) {
   const value = useMemo<LocaleContextValue>(
     () => ({ locale, messages: messages[locale] }),
-    [locale],
+    [locale]
   )
 
   useEffect(() => {

@@ -52,12 +52,12 @@ describe("LocaleProvider + useLocale + useT", () => {
     render(
       <LocaleProvider locale="en">
         <LocaleProbe />
-      </LocaleProvider>,
+      </LocaleProvider>
     )
     expect(screen.getByTestId("locale").textContent).toBe("en")
     expect(screen.getByTestId("hero-title").textContent).toBe("Meoru Butler")
     expect(screen.getByTestId("t-hero-subtitle").textContent).toBe(
-      "Personal site of @Meoru_butler",
+      "Personal site of @Meoru_butler"
     )
   })
 
@@ -65,12 +65,12 @@ describe("LocaleProvider + useLocale + useT", () => {
     render(
       <LocaleProvider locale="ko">
         <LocaleProbe />
-      </LocaleProvider>,
+      </LocaleProvider>
     )
     expect(screen.getByTestId("locale").textContent).toBe("ko")
     expect(screen.getByTestId("hero-title").textContent).toBe("머루집사")
     expect(screen.getByTestId("t-hero-subtitle").textContent).toBe(
-      "@Meoru_butler 개인 사이트",
+      "@Meoru_butler 개인 사이트"
     )
   })
 
@@ -78,7 +78,7 @@ describe("LocaleProvider + useLocale + useT", () => {
     render(
       <LocaleProvider locale="ko">
         <LocaleProbe />
-      </LocaleProvider>,
+      </LocaleProvider>
     )
     expect(cookieValue).toContain("locale=ko")
   })
@@ -87,13 +87,13 @@ describe("LocaleProvider + useLocale + useT", () => {
     const { rerender } = render(
       <LocaleProvider locale="en">
         <LocaleProbe />
-      </LocaleProvider>,
+      </LocaleProvider>
     )
     expect(cookieValue).toContain("locale=en")
     rerender(
       <LocaleProvider locale="ko">
         <LocaleProbe />
-      </LocaleProvider>,
+      </LocaleProvider>
     )
     expect(cookieValue).toContain("locale=ko")
   })

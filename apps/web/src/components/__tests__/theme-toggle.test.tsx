@@ -32,7 +32,7 @@ function setupMatchMedia(initialMatches: boolean) {
       addListener: vi.fn(),
       removeListener: vi.fn(),
       dispatchEvent: () => true,
-    }),
+    })
   )
 }
 
@@ -42,7 +42,7 @@ function renderToggle() {
       <LocaleProvider locale="en">
         <ThemeToggle />
       </LocaleProvider>
-    </ThemeProvider>,
+    </ThemeProvider>
   )
 }
 
@@ -71,10 +71,10 @@ describe("ThemeToggle", () => {
     const dark = await screen.findByRole("menuitemradio", { name: /dark/i })
     expect(dark).toHaveAttribute("aria-checked", "true")
     expect(
-      screen.getByRole("menuitemradio", { name: /light/i }),
+      screen.getByRole("menuitemradio", { name: /light/i })
     ).toHaveAttribute("aria-checked", "false")
     expect(
-      screen.getByRole("menuitemradio", { name: /system/i }),
+      screen.getByRole("menuitemradio", { name: /system/i })
     ).toHaveAttribute("aria-checked", "false")
   })
 
@@ -92,7 +92,9 @@ describe("ThemeToggle", () => {
     const user = userEvent.setup()
     renderToggle()
     await user.click(screen.getByRole("button", { name: "Theme" }))
-    const lightItem = await screen.findByRole("menuitemradio", { name: /light/i })
+    const lightItem = await screen.findByRole("menuitemradio", {
+      name: /light/i,
+    })
     await user.click(lightItem)
     expect(document.documentElement.classList.contains("dark")).toBe(false)
     expect(cookieValue).toContain("theme=light")
@@ -102,7 +104,9 @@ describe("ThemeToggle", () => {
     const user = userEvent.setup()
     renderToggle()
     await user.click(screen.getByRole("button", { name: "Theme" }))
-    const systemItem = await screen.findByRole("menuitemradio", { name: /system/i })
+    const systemItem = await screen.findByRole("menuitemradio", {
+      name: /system/i,
+    })
     await user.click(systemItem)
     expect(cookieValue).toContain("theme=system")
   })

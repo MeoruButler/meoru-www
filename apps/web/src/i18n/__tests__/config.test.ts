@@ -133,7 +133,7 @@ describe("i18n/config", () => {
     it("extracts the locale from a cookie string", () => {
       expect(parseLocaleFromCookieString("locale=ko")).toBe("ko")
       expect(parseLocaleFromCookieString("session=1; locale=en; ab=2")).toBe(
-        "en",
+        "en"
       )
     })
 

@@ -24,7 +24,7 @@ export function LocaleLinks() {
         <h1 className="text-3xl font-semibold tracking-tight">
           {t.linksPage.title}
         </h1>
-        <p className="text-muted-foreground mt-3 text-base">
+        <p className="mt-3 text-base text-muted-foreground">
           {t.linksPage.description}
         </p>
       </section>
@@ -35,11 +35,11 @@ export function LocaleLinks() {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:bg-muted flex items-center justify-between rounded-3xl border px-5 py-4 text-base font-medium transition-colors"
+              className="flex items-center justify-between rounded-3xl border px-5 py-4 text-base font-medium transition-colors hover:bg-muted"
             >
               <span>{t.linksPage[link.labelKey]}</span>
               <ArrowUpRight
-                className="text-muted-foreground h-4 w-4"
+                className="h-4 w-4 text-muted-foreground"
                 aria-hidden="true"
               />
             </a>

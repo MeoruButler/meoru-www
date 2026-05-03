@@ -17,36 +17,36 @@ test.describe("seo", () => {
     await expect(page).toHaveTitle("Meoru Butler")
     await expect(page.locator('meta[name="description"]')).toHaveAttribute(
       "content",
-      "Personal site of @Meoru_butler",
+      "Personal site of @Meoru_butler"
     )
     await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
       "content",
-      "Meoru Butler",
+      "Meoru Butler"
     )
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
       "content",
-      "/og.png",
+      "/og.png"
     )
     await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
       "content",
-      "summary_large_image",
+      "summary_large_image"
     )
     await expect(page.locator('meta[name="twitter:site"]')).toHaveAttribute(
       "content",
-      "@Meoru_butler",
+      "@Meoru_butler"
     )
   })
 
   test("emits hreflang alternates for both locales", async ({ page }) => {
     await gotoHydrated(page, "/en")
     await expect(
-      page.locator('link[rel="alternate"][hreflang="en"]'),
+      page.locator('link[rel="alternate"][hreflang="en"]')
     ).toHaveAttribute("href", "/en")
     await expect(
-      page.locator('link[rel="alternate"][hreflang="ko"]'),
+      page.locator('link[rel="alternate"][hreflang="ko"]')
     ).toHaveAttribute("href", "/ko")
     await expect(
-      page.locator('link[rel="alternate"][hreflang="x-default"]'),
+      page.locator('link[rel="alternate"][hreflang="x-default"]')
     ).toHaveAttribute("href", "/en")
   })
 
@@ -57,14 +57,14 @@ test.describe("seo", () => {
     await expect(page.locator("html")).toHaveAttribute("lang", "en")
     await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute(
       "content",
-      "en_US",
+      "en_US"
     )
 
     await gotoHydrated(page, "/ko")
     await expect(page.locator("html")).toHaveAttribute("lang", "ko")
     await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute(
       "content",
-      "ko_KR",
+      "ko_KR"
     )
   })
 

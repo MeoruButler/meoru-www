@@ -79,7 +79,7 @@ describe("ThemeProvider + useTheme", () => {
     render(
       <ThemeProvider>
         <ThemeProbe />
-      </ThemeProvider>,
+      </ThemeProvider>
     )
     expect(screen.getByTestId("theme").textContent).toBe("system")
     expect(screen.getByTestId("resolved").textContent).toBe("light")
@@ -92,7 +92,7 @@ describe("ThemeProvider + useTheme", () => {
     render(
       <ThemeProvider>
         <ThemeProbe />
-      </ThemeProvider>,
+      </ThemeProvider>
     )
     expect(screen.getByTestId("theme").textContent).toBe("dark")
     expect(screen.getByTestId("resolved").textContent).toBe("dark")
@@ -104,7 +104,7 @@ describe("ThemeProvider + useTheme", () => {
     render(
       <ThemeProvider>
         <ThemeProbe />
-      </ThemeProvider>,
+      </ThemeProvider>
     )
     expect(screen.getByTestId("resolved").textContent).toBe("dark")
     expect(document.documentElement.classList.contains("dark")).toBe(true)
@@ -116,7 +116,7 @@ describe("ThemeProvider + useTheme", () => {
     render(
       <ThemeProvider>
         <ThemeProbe />
-      </ThemeProvider>,
+      </ThemeProvider>
     )
 
     await user.click(screen.getByTestId("set-dark"))
@@ -135,7 +135,7 @@ describe("ThemeProvider + useTheme", () => {
     render(
       <ThemeProvider>
         <ThemeProbe />
-      </ThemeProvider>,
+      </ThemeProvider>
     )
     expect(screen.getByTestId("resolved").textContent).toBe("light")
 
@@ -159,7 +159,7 @@ describe("ThemeProvider + useTheme", () => {
     render(
       <ThemeProvider>
         <ThemeProbe />
-      </ThemeProvider>,
+      </ThemeProvider>
     )
     expect(screen.getByTestId("theme").textContent).toBe("system")
   })
@@ -169,7 +169,7 @@ describe("ThemeProvider + useTheme", () => {
     const { unmount } = render(
       <ThemeProvider>
         <ThemeProbe />
-      </ThemeProvider>,
+      </ThemeProvider>
     )
     expect(media.listeners.size).toBe(1)
     unmount()

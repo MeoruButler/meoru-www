@@ -55,7 +55,7 @@ describe("theme-config", () => {
     it("extracts the theme value from a cookie string", () => {
       expect(parseThemeFromCookie("theme=light")).toBe("light")
       expect(parseThemeFromCookie("session=abc; theme=dark; other=1")).toBe(
-        "dark",
+        "dark"
       )
       expect(parseThemeFromCookie("theme=system")).toBe("system")
     })
@@ -110,9 +110,9 @@ describe("theme-config", () => {
         })
         const matchMedia = vi.fn().mockReturnValue({ matches: prefers })
         vi.stubGlobal("matchMedia", matchMedia)
-    new Function(themeInitScript)()
+        new Function(themeInitScript)()
         expect(document.documentElement.classList.contains("dark")).toBe(
-          expectDark,
+          expectDark
         )
         vi.unstubAllGlobals()
       }
@@ -125,7 +125,7 @@ describe("theme-config", () => {
           throw new Error("boom")
         },
       })
-expect(() => new Function(themeInitScript)()).not.toThrow()
+      expect(() => new Function(themeInitScript)()).not.toThrow()
       Object.defineProperty(document, "cookie", {
         configurable: true,
         value: "",

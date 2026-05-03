@@ -58,7 +58,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   const prefersDark = useSyncExternalStore(
     subscribePrefersDark,
     getPrefersDark,
-    getServerPrefersDark,
+    getServerPrefersDark
   )
 
   useEffect(() => {
@@ -76,7 +76,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       resolvedTheme: resolveTheme(theme, prefersDark),
       setTheme,
     }),
-    [theme, prefersDark, setTheme],
+    [theme, prefersDark, setTheme]
   )
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>

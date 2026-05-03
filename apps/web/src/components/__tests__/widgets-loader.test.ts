@@ -7,12 +7,9 @@ import {
   type TwitterWidgets,
 } from "../twitter/widgets-loader"
 
-function fireScriptEvent(
-  type: "load" | "error",
-  twttr?: TwitterWidgets,
-): void {
+function fireScriptEvent(type: "load" | "error", twttr?: TwitterWidgets): void {
   const script = document.getElementById(
-    TWITTER_WIDGETS_SCRIPT_ID,
+    TWITTER_WIDGETS_SCRIPT_ID
   ) as HTMLScriptElement | null
   if (!script) throw new Error("script element missing")
   if (twttr) window.twttr = twttr
@@ -33,12 +30,10 @@ describe("widgets-loader", () => {
     const second = loadTwitterWidgets()
     expect(first).toBe(second)
     const scripts = Array.from(
-      document.querySelectorAll(`#${TWITTER_WIDGETS_SCRIPT_ID}`),
+      document.querySelectorAll(`#${TWITTER_WIDGETS_SCRIPT_ID}`)
     )
     expect(scripts).toHaveLength(1)
-    expect((scripts[0] as HTMLScriptElement).src).toContain(
-      TWITTER_WIDGETS_SRC,
-    )
+    expect((scripts[0] as HTMLScriptElement).src).toContain(TWITTER_WIDGETS_SRC)
 
     const fakeTwttr: TwitterWidgets = { widgets: { load: () => {} } }
     fireScriptEvent("load", fakeTwttr)
@@ -49,9 +44,7 @@ describe("widgets-loader", () => {
     const fakeTwttr: TwitterWidgets = { widgets: { load: () => {} } }
     window.twttr = fakeTwttr
     await expect(loadTwitterWidgets()).resolves.toBe(fakeTwttr)
-    expect(
-      document.getElementById(TWITTER_WIDGETS_SCRIPT_ID),
-    ).toBeNull()
+    expect(document.getElementById(TWITTER_WIDGETS_SCRIPT_ID)).toBeNull()
   })
 
   it("rejects when the script loads without populating window.twttr", async () => {
@@ -67,7 +60,7 @@ describe("widgets-loader", () => {
 
     const promise = loadTwitterWidgets()
     expect(
-      document.querySelectorAll(`#${TWITTER_WIDGETS_SCRIPT_ID}`),
+      document.querySelectorAll(`#${TWITTER_WIDGETS_SCRIPT_ID}`)
     ).toHaveLength(1)
     expect(existing.src).toBe("")
 

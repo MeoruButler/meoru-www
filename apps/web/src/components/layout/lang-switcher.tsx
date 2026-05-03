@@ -8,11 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@workspace/ui/components/dropdown-menu"
 import { cn } from "@workspace/ui/lib/utils"
-import {
-  SUPPORTED_LOCALES,
-  swapLocaleInPath,
-  type Locale,
-} from "@/i18n/config"
+import { SUPPORTED_LOCALES, swapLocaleInPath, type Locale } from "@/i18n/config"
 import { useLocale, useT } from "@/i18n/use-locale"
 
 export function LangSwitcher() {

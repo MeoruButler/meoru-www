@@ -29,7 +29,7 @@ export function loadTwitterWidgets(): Promise<TwitterWidgets> {
 
   pending = new Promise<TwitterWidgets>((resolve, reject) => {
     const existing = document.getElementById(
-      TWITTER_WIDGETS_SCRIPT_ID,
+      TWITTER_WIDGETS_SCRIPT_ID
     ) as HTMLScriptElement | null
     const script = existing ?? document.createElement("script")
 

@@ -21,7 +21,7 @@ describe("Footer", () => {
     render(
       <LocaleProvider locale="en">
         <Footer />
-      </LocaleProvider>,
+      </LocaleProvider>
     )
     expect(screen.getByText("© Meoru Butler")).toBeInTheDocument()
     const link = screen.getByRole("link", { name: "@Meoru_butler" })
@@ -32,7 +32,7 @@ describe("Footer", () => {
     render(
       <LocaleProvider locale="ko">
         <Footer />
-      </LocaleProvider>,
+      </LocaleProvider>
     )
     expect(screen.getByText("© 머루집사")).toBeInTheDocument()
   })

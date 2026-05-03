@@ -1,8 +1,5 @@
 import { useContext } from "react"
-import {
-  LocaleContext,
-  type LocaleContextValue,
-} from "./locale-provider"
+import { LocaleContext, type LocaleContextValue } from "./locale-provider"
 import type { Messages } from "./messages"
 
 export function useLocale(): LocaleContextValue {

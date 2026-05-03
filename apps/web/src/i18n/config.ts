@@ -14,13 +14,13 @@ export function parseLocale(value: string | undefined): Locale | undefined {
 }
 
 export function parseLocaleFromCookie(
-  cookieValue: string | undefined,
+  cookieValue: string | undefined
 ): Locale | undefined {
   return parseLocale(cookieValue)
 }
 
 export function parseAcceptLanguage(
-  header: string | undefined,
+  header: string | undefined
 ): Locale | undefined {
   if (!header) return undefined
   const candidates = header
@@ -53,10 +53,7 @@ export function pickLocaleFromPathname(pathname: string): Locale {
   return isLocale(first) ? first : DEFAULT_LOCALE
 }
 
-export function swapLocaleInPath(
-  pathname: string,
-  nextLocale: Locale,
-): string {
+export function swapLocaleInPath(pathname: string, nextLocale: Locale): string {
   const segments = pathname.split("/").filter(Boolean)
   if (segments.length === 0) return `/${nextLocale}`
   segments[0] = nextLocale
@@ -64,10 +61,10 @@ export function swapLocaleInPath(
 }
 
 export function parseLocaleFromCookieString(
-  cookieString: string,
+  cookieString: string
 ): Locale | undefined {
   const match = cookieString.match(
-    new RegExp(`(?:^|; )${LOCALE_COOKIE_NAME}=([^;]+)`),
+    new RegExp(`(?:^|; )${LOCALE_COOKIE_NAME}=([^;]+)`)
   )
   if (!match) return undefined
   try {

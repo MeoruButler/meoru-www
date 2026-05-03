@@ -12,9 +12,7 @@ test.describe("theme", () => {
     page,
     context,
   }) => {
-    await context.addCookies([
-      { name: "theme", value: "dark", url: baseURL },
-    ])
+    await context.addCookies([{ name: "theme", value: "dark", url: baseURL }])
     await page.emulateMedia({ colorScheme: "light" })
     await page.goto("/")
     await expect(page.locator("html")).toHaveClass(darkClass)
@@ -24,9 +22,7 @@ test.describe("theme", () => {
     page,
     context,
   }) => {
-    await context.addCookies([
-      { name: "theme", value: "light", url: baseURL },
-    ])
+    await context.addCookies([{ name: "theme", value: "light", url: baseURL }])
     await page.emulateMedia({ colorScheme: "dark" })
     await page.goto("/")
     const cls = (await page.locator("html").getAttribute("class")) ?? ""
@@ -42,7 +38,7 @@ test.describe("theme", () => {
 
     await page.emulateMedia({ colorScheme: "light" })
     await page.waitForFunction(
-      () => !document.documentElement.classList.contains("dark"),
+      () => !document.documentElement.classList.contains("dark")
     )
   })
 })

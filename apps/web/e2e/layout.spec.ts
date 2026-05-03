@@ -18,17 +18,15 @@ test.describe("layout", () => {
     }) => {
       await gotoHydrated(page, "/en")
       await expect(
-        page.getByRole("link", { name: "Meoru Butler" }),
+        page.getByRole("link", { name: "Meoru Butler" })
       ).toBeVisible()
       await expect(
-        page.getByRole("link", { name: "Home", exact: true }),
+        page.getByRole("link", { name: "Home", exact: true })
       ).toBeVisible()
       await expect(page.getByText("© Meoru Butler")).toBeVisible()
     })
 
-    test("applies the dark class when 'Dark' is selected", async ({
-      page,
-    }) => {
+    test("applies the dark class when 'Dark' is selected", async ({ page }) => {
       await page.emulateMedia({ colorScheme: "light" })
       await gotoHydrated(page, "/en")
 
@@ -43,9 +41,7 @@ test.describe("layout", () => {
       page,
       context,
     }) => {
-      await context.addCookies([
-        { name: "theme", value: "dark", url: baseURL },
-      ])
+      await context.addCookies([{ name: "theme", value: "dark", url: baseURL }])
       await page.emulateMedia({ colorScheme: "light" })
       await gotoHydrated(page, "/en")
       await expect(page.locator("html")).toHaveClass(/(?:^|\s)dark(?:\s|$)/)
@@ -55,13 +51,11 @@ test.describe("layout", () => {
       await expect(lightItem).toBeVisible()
       await lightItem.click()
       await page.waitForFunction(
-        () => !document.documentElement.classList.contains("dark"),
+        () => !document.documentElement.classList.contains("dark")
       )
     })
 
-    test("highlights the current selection in both menus", async ({
-      page,
-    }) => {
+    test("highlights the current selection in both menus", async ({ page }) => {
       await page.emulateMedia({ colorScheme: "light" })
       await gotoHydrated(page, "/en")
 
@@ -70,19 +64,19 @@ test.describe("layout", () => {
 
       await langTrigger.click()
       await expect(
-        page.getByRole("menuitemradio", { name: "English" }),
+        page.getByRole("menuitemradio", { name: "English" })
       ).toHaveAttribute("aria-checked", "true")
       await expect(
-        page.getByRole("menuitemradio", { name: "Korean" }),
+        page.getByRole("menuitemradio", { name: "Korean" })
       ).toHaveAttribute("aria-checked", "false")
       await page.keyboard.press("Escape")
 
       await page.getByRole("button", { name: "Theme" }).first().click()
       await expect(
-        page.getByRole("menuitemradio", { name: "System" }),
+        page.getByRole("menuitemradio", { name: "System" })
       ).toHaveAttribute("aria-checked", "true")
       await expect(
-        page.getByRole("menuitemradio", { name: "Dark" }),
+        page.getByRole("menuitemradio", { name: "Dark" })
       ).toHaveAttribute("aria-checked", "false")
     })
 
@@ -94,7 +88,7 @@ test.describe("layout", () => {
       await page.getByRole("menuitemradio", { name: "Korean" }).click()
       await expect(page).toHaveURL(/\/ko\/?$/)
       await expect(
-        page.getByRole("heading", { name: "머루집사" }),
+        page.getByRole("heading", { name: "머루집사" })
       ).toBeVisible()
     })
   })
@@ -105,12 +99,10 @@ test.describe("layout", () => {
     }) => {
       await page.setViewportSize({ width: 390, height: 844 })
       await gotoHydrated(page, "/en")
-      await expect(
-        page.getByRole("button", { name: "Language" }),
-      ).toBeVisible()
+      await expect(page.getByRole("button", { name: "Language" })).toBeVisible()
       await expect(page.getByRole("button", { name: "Theme" })).toBeVisible()
       await expect(
-        page.getByRole("button", { name: "Open menu" }),
+        page.getByRole("button", { name: "Open menu" })
       ).toBeVisible()
     })
 
@@ -123,7 +115,7 @@ test.describe("layout", () => {
       const dialog = page.getByRole("dialog")
       await expect(dialog).toBeVisible()
       await expect(
-        dialog.getByRole("link", { name: "Home", exact: true }),
+        dialog.getByRole("link", { name: "Home", exact: true })
       ).toBeVisible()
     })
   })
