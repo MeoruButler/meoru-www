@@ -5,10 +5,9 @@ import { renderToStaticMarkup } from "react-dom/server"
 let mockedPathname = "/en"
 
 vi.mock("@tanstack/react-router", async () => {
-  const actual =
-    await vi.importActual<typeof import("@tanstack/react-router")>(
-      "@tanstack/react-router"
-    )
+  const actual = await vi.importActual<typeof import("@tanstack/react-router")>(
+    "@tanstack/react-router"
+  )
   return {
     ...actual,
     HeadContent: () => null,
@@ -50,11 +49,22 @@ describe("routes/__root", () => {
     )
   })
 
-  it("renders the 404 not-found component", () => {
+  it("renders the 404 not-found component with the cinema-themed copy", () => {
+    mockedPathname = "/en"
     render(<NotFound />)
-    expect(screen.getByRole("heading", { name: "404" })).toBeInTheDocument()
     expect(
-      screen.getByText("The requested page could not be found.")
+      screen.getByRole("heading", { name: "Reel 404 — Frame Missing" })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText("This cut never made the final edit.")
+    ).toBeInTheDocument()
+  })
+
+  it("translates the not-found copy when the path is Korean", () => {
+    mockedPathname = "/ko/missing"
+    render(<NotFound />)
+    expect(
+      screen.getByText("이 컷은 편집실 바닥에 떨어졌습니다.")
     ).toBeInTheDocument()
   })
 

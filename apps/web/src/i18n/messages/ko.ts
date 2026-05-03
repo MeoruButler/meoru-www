@@ -24,6 +24,7 @@ export const ko: Messages = {
   },
   footer: {
     copyright: "© 머루집사",
+    filmCredit: "Shot on Cinestill 800T · Cut on Final Cut",
   },
   hero: {
     title: "머루집사",
@@ -36,7 +37,7 @@ export const ko: Messages = {
     twitter: "X / 트위터",
   },
   notFound: {
-    title: "404",
-    description: "요청하신 페이지를 찾을 수 없습니다.",
+    title: "Reel 404 — Frame Missing",
+    description: "이 컷은 편집실 바닥에 떨어졌습니다.",
   },
 }

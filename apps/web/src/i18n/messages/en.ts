@@ -22,6 +22,7 @@ export const en = {
   },
   footer: {
     copyright: "© Meoru Butler",
+    filmCredit: "Shot on Cinestill 800T · Cut on Final Cut",
   },
   hero: {
     title: "Meoru Butler",
@@ -34,8 +35,8 @@ export const en = {
     twitter: "X / Twitter",
   },
   notFound: {
-    title: "404",
-    description: "The requested page could not be found.",
+    title: "Reel 404 — Frame Missing",
+    description: "This cut never made the final edit.",
   },
 }
 

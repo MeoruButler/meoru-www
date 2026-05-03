@@ -1,3 +1,4 @@
+import { Film } from "lucide-react"
 import {
   HeadContent,
   Scripts,
@@ -9,9 +10,12 @@ import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/react"
 
 import appCss from "@workspace/ui/globals.css?url"
+import { CinephileEasterEggs } from "@/components/easter-eggs"
+import { DirectorsCutProvider } from "@/lib/directors-cut-context"
 import { ThemeProvider } from "@/theme/theme-provider"
 import { themeInitScript } from "@/theme/theme-config"
 import { pickLocaleFromPathname } from "@/i18n/config"
+import { messages } from "@/i18n/messages"
 
 const SITE_TITLE = "Meoru Butler"
 const SITE_DESCRIPTION = "Personal site of @Meoru_butler"
@@ -45,10 +49,16 @@ export const head = () => ({
 })
 
 export function NotFound() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname })
+  const locale = pickLocaleFromPathname(pathname)
+  const t = messages[locale].notFound
   return (
-    <main className="container mx-auto p-4 pt-16">
-      <h1>404</h1>
-      <p>The requested page could not be found.</p>
+    <main className="container mx-auto flex min-h-svh flex-col items-center justify-center gap-3 p-4 text-center">
+      <Film className="h-10 w-10 text-muted-foreground" aria-hidden="true" />
+      <h1 className="text-2xl font-semibold tracking-tight">{t.title}</h1>
+      <p className="max-w-md text-base text-muted-foreground">
+        {t.description}
+      </p>
     </main>
   )
 }
@@ -70,7 +80,10 @@ export function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <ThemeProvider>
-          {children}
+          <DirectorsCutProvider>
+            {children}
+            <CinephileEasterEggs />
+          </DirectorsCutProvider>
           {import.meta.env.DEV && (
             <TanStackRouterDevtools position="bottom-right" />
           )}
