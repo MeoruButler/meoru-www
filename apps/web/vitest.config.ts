@@ -25,6 +25,8 @@ export default defineConfig({
         "src/i18n/locale-loader.ts",
         "src/components/layout/header.tsx",
         "src/components/layout/lang-switcher.tsx",
+        "src/data/photo-manifest.ts",
+        "src/data/photos.generated.ts",
       ],
       thresholds: {
         lines: 100,
