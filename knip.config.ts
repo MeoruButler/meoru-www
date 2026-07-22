@@ -13,8 +13,8 @@ const config: KnipConfig = {
       ignoreUnresolved: ['next'],
     },
   },
-  // Loaded indirectly by configuration files or used as a manual CLI.
-  ignoreDependencies: ['@tailwindcss/postcss', 'eslint-plugin-turbo', 'shadcn'],
+  // Used as a manual CLI.
+  ignoreDependencies: ['shadcn'],
 };
 
 export default config;

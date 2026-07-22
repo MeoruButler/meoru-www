@@ -7,7 +7,7 @@
     "./utils/*": "./src/utils/*.ts"
   },
   "scripts": {
-    "check-types": "node ../../node_modules/typescript-go/bin/tsc --noEmit",
+    "check-types": "tsc --noEmit",
     "lint": "oxlint --no-error-on-unmatched-pattern .",
     "lint:fix": "oxlint --fix --no-error-on-unmatched-pattern .",
     "format": "oxfmt --check --no-error-on-unmatched-pattern .",
@@ -17,6 +17,6 @@
   },
   "devDependencies": {
     "@meoru/typescript-config": "workspace:*",
-    "typescript": "^5.9.3"
+    "typescript": "npm:@typescript/typescript6@^6.0.2"
   }
 }
