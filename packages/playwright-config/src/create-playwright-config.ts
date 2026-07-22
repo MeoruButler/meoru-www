@@ -1,15 +1,15 @@
 import { defineConfig, devices, type PlaywrightTestConfig } from '@playwright/test';
 
 type CreatePlaywrightConfigOptions = {
-  /** E2E 서버 포트. baseURL과 webServer.url 모두에 사용된다. */
+  /** E2E server port used by both baseURL and webServer.url. */
   port: number;
-  /** webServer를 띄우는 명령. 예: 'pnpm start:e2e' | 'pnpm preview:e2e' */
+  /** Command that starts the web server, such as 'pnpm start:e2e'. */
   command: string;
-  /** CI에서 브라우저 job당 worker 수. 로컬은 항상 '50%'. */
+  /** Worker count per browser job in CI. Local runs always use '50%'. */
   ciWorkers?: number;
-  /** webServer 기동 타임아웃(ms). 느린 빌드는 늘린다. */
+  /** Web server startup timeout in milliseconds. */
   webServerTimeout?: number;
-  /** webServer 프로세스에 추가로 주입할 env. 예: { E2E_INCLUDE_DRAFT: '1' } */
+  /** Additional environment variables for the web server process. */
   extraEnv?: Record<string, string>;
 };
 
@@ -18,8 +18,8 @@ const shouldReuseExistingServer =
   process.env.PLAYWRIGHT_REUSE_SERVER === 'true' || process.env.PLAYWRIGHT_REUSE_SERVER === '1';
 
 /**
- * CI/FORCE_COLOR 환경에서 NO_COLOR가 함께 전달되면 Node가 반복 warning을 출력한다.
- * 색을 유지하기로 한 맥락(CI/FORCE_COLOR)에서는 충돌하는 NO_COLOR를 제거한다.
+ * Node repeatedly warns when NO_COLOR is passed together with CI or FORCE_COLOR.
+ * Remove the conflicting NO_COLOR variable when the environment has opted into color.
  */
 function createWebServerEnv(extraEnv: Record<string, string>): Record<string, string> {
   const env = Object.fromEntries(
@@ -36,12 +36,12 @@ function createWebServerEnv(extraEnv: Record<string, string>): Record<string, st
 }
 
 /**
- * 모노레포 앱 공통 Playwright 설정 factory.
+ * Shared Playwright configuration factory for monorepo applications.
  *
- * 앱마다 달라지는 표면(port/command/ciWorkers/webServerTimeout/extraEnv)만 옵션으로 받고
- * 나머지(projects 매트릭스, reporter, retries, trace, reuse 로직)는 단일 소스로 고정한다.
+ * Applications provide only port, command, ciWorkers, webServerTimeout, and extraEnv.
+ * The project matrix, reporter, retries, tracing, and server reuse stay in one source.
  *
- * 반환값은 일반 config 객체이므로, 드물게 추가 커스터마이즈가 필요하면 호출부에서 spread로 override할 수 있다.
+ * The return value is a regular config object, so callers may spread and override rare app-specific values.
  *
  * @see https://playwright.dev/docs/test-configuration
  */
@@ -55,22 +55,22 @@ export function createPlaywrightConfig({
   return defineConfig({
     testDir: './e2e',
     fullyParallel: true,
-    /* CI에서 test.only를 실수로 남기면 실패시킨다. */
+    /* Fail CI when test.only is committed accidentally. */
     forbidOnly: isCI,
-    /* CI에서만 재시도 */
+    /* Retry only in CI. */
     retries: isCI ? 2 : 0,
-    /* 로컬은 빠른 피드백을 위해 '50%' */
+    /* Use half the local workers for fast feedback without contention. */
     workers: isCI ? ciWorkers : '50%',
     reporter: isCI ? [['html'], ['github']] : 'list',
     timeout: 30_000,
     use: {
       baseURL: `http://localhost:${port}`,
-      /* 재시도 시에만 trace 수집 */
+      /* Capture a trace only on the first retry. */
       trace: 'on-first-retry',
       actionTimeout: 10_000,
       navigationTimeout: 15_000,
     },
-    /* CI는 크로스 브라우저 전부, 로컬은 빠른 피드백용 chromium만 */
+    /* Run all browsers in CI and Chromium only during local feedback loops. */
     projects: isCI
       ? [
           { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
@@ -82,7 +82,7 @@ export function createPlaywrightConfig({
       command,
       env: createWebServerEnv(extraEnv),
       url: `http://localhost:${port}`,
-      // Reuse는 opt-in. 떠 있는 stale 서버에 실수로 붙는 것을 막는다.
+      // Server reuse is opt-in to avoid attaching to a stale process accidentally.
       reuseExistingServer: shouldReuseExistingServer,
       timeout: webServerTimeout,
     },

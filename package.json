@@ -22,6 +22,7 @@
     "test:ci": "turbo run test:ci",
     "test:e2e": "turbo run test:e2e",
     "knip": "knip",
+    "verify": "pnpm quality && pnpm check-types && pnpm test:ci && pnpm build && pnpm knip && pnpm version:check",
     "turbo:clean": "turbo run clean && rm -rf node_modules .turbo",
     "affected": "pnpm quality && turbo run build test --filter='[HEAD^1]'",
     "prepare": "husky",

@@ -1,12 +1,12 @@
+[English](README.md) | [한국어](README.ko.md)
+
 # @meoru/playwright-config
 
-모노레포 앱 공통 Playwright E2E 설정 factory.
+A shared Playwright E2E configuration factory for applications in this monorepo.
 
-`apps/*/playwright.config.ts`가 거의 동일하게 중복되던 것을 단일 소스로 통합한다.
-앱마다 달라지는 표면만 옵션으로 받고, 나머지(브라우저 매트릭스, reporter, retries, trace,
-reuse 로직, CI/FORCE_COLOR ↔ NO_COLOR 정규화)는 패키지가 고정한다.
+It replaces nearly identical `apps/*/playwright.config.ts` files with one source. Applications provide only the values that vary; the package owns the browser matrix, reporters, retries, tracing, server reuse, and CI/FORCE_COLOR versus NO_COLOR normalization.
 
-## 사용
+## Usage
 
 ```ts
 // apps/<app>/playwright.config.ts
@@ -15,28 +15,27 @@ import { createPlaywrightConfig } from '@meoru/playwright-config/create-playwrig
 export default createPlaywrightConfig({
   port: 3002,
   command: 'pnpm start:e2e',
-  extraEnv: { E2E_INCLUDE_DRAFT: '1' }, // 선택
+  extraEnv: { E2E_INCLUDE_DRAFT: '1' }, // Optional
 });
 ```
 
-## 옵션
+## Options
 
-| 옵션               | 필수 | 기본값    | 설명                                                 |
-| ------------------ | ---- | --------- | ---------------------------------------------------- |
-| `port`             | O    | -         | `baseURL` / `webServer.url`에 사용되는 E2E 서버 포트 |
-| `command`          | O    | -         | webServer 기동 명령 (`pnpm start:e2e` 등)            |
-| `ciWorkers`        | X    | `2`       | CI에서 브라우저 job당 worker 수. 로컬은 항상 `'50%'` |
-| `webServerTimeout` | X    | `120_000` | webServer 기동 타임아웃(ms). 느린 빌드는 늘린다      |
-| `extraEnv`         | X    | `{}`      | webServer 프로세스에 추가 주입할 env                 |
+| Option             | Required | Default   | Description                                              |
+| ------------------ | -------- | --------- | -------------------------------------------------------- |
+| `port`             | Yes      | -         | E2E server port used by `baseURL` and `webServer.url`    |
+| `command`          | Yes      | -         | Command that starts the web server                       |
+| `ciWorkers`        | No       | `2`       | Workers per browser job in CI; local runs always use 50% |
+| `webServerTimeout` | No       | `120_000` | Web server startup timeout in milliseconds               |
+| `extraEnv`         | No       | `{}`      | Additional environment variables for the server process  |
 
-## Escape hatch
+## Escape Hatch
 
-반환값은 일반 config 객체다. 드물게 추가 커스터마이즈가 필요하면 호출부에서 spread로 override한다.
+The factory returns a regular configuration object. Override a rare application-specific value at the call site:
 
 ```ts
 const base = createPlaywrightConfig({ port: 3000, command: 'pnpm start:e2e' });
 export default { ...base, timeout: 60_000 };
 ```
 
-추상화는 "중복 제거 + 드리프트 방지"가 목적이다. 리포터/플러그인/프로젝트 커스터마이즈처럼
-앱별 분기가 커지는 책임은 이 패키지로 끌어오지 않는다.
+The abstraction exists to remove duplication and prevent drift. Keep application-specific reporter, plugin, and project branches at the call site.
