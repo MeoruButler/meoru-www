@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 /**
- * 모든 앱 package.json의 버전을 동기화하는 스크립트
+ * Synchronize package.json versions across all applications.
  *
- * 사용법:
- *   node scripts/sync-versions.mjs          # root 버전으로 동기화
- *   node scripts/sync-versions.mjs 1.2.0    # 지정된 버전으로 동기화
- *   node scripts/sync-versions.mjs --check  # 버전 동기화 상태 확인만
+ * Usage:
+ *   node scripts/sync-versions.mjs          # Synchronize with the root version
+ *   node scripts/sync-versions.mjs 1.2.0    # Synchronize with a specified version
+ *   node scripts/sync-versions.mjs --check  # Check synchronization only
  */
 
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'fs';
@@ -18,7 +18,7 @@ const ROOT_DIR = join(__dirname, '..');
 const APPS_DIR = join(ROOT_DIR, 'apps');
 
 /**
- * package.json 파일을 읽고 파싱
+ * Read and parse a package.json file.
  */
 function readPackageJson(filePath) {
   const content = readFileSync(filePath, 'utf-8');
@@ -26,7 +26,7 @@ function readPackageJson(filePath) {
 }
 
 /**
- * package.json 파일에 쓰기 (포맷 유지)
+ * Write a package.json file while preserving its formatting.
  */
 function writePackageJson(filePath, data) {
   const content = JSON.stringify(data, null, 2) + '\n';
@@ -34,7 +34,7 @@ function writePackageJson(filePath, data) {
 }
 
 /**
- * apps 폴더의 모든 package.json 경로 찾기
+ * Find every package.json file under apps.
  */
 function findAppsPackageJsons() {
   const packages = [];
@@ -55,12 +55,12 @@ function findAppsPackageJsons() {
             path: packageJsonPath,
           });
         } catch {
-          // package.json이 없는 폴더는 무시
+          // Ignore directories without a package.json file.
         }
       }
     }
   } catch (error) {
-    console.error('apps 폴더를 읽을 수 없습니다:', error.message);
+    console.error('Unable to read the apps directory:', error.message);
     process.exit(1);
   }
 
@@ -68,14 +68,14 @@ function findAppsPackageJsons() {
 }
 
 /**
- * 버전 동기화 상태 확인
+ * Check version synchronization.
  */
 function checkVersions() {
   const rootPackageJson = readPackageJson(join(ROOT_DIR, 'package.json'));
   const rootVersion = rootPackageJson.version;
   const appsPackages = findAppsPackageJsons();
 
-  console.log('\n📦 버전 동기화 상태 확인\n');
+  console.log('\n📦 Version synchronization check\n');
   console.log(`   Root: ${rootVersion}`);
   console.log('   ─────────────────────────');
 
@@ -85,7 +85,7 @@ function checkVersions() {
     const pkg = readPackageJson(path);
     const isSynced = pkg.version === rootVersion;
     const icon = isSynced ? '✓' : '✗';
-    const status = isSynced ? '' : ` (현재: ${pkg.version})`;
+    const status = isSynced ? '' : ` (current: ${pkg.version})`;
 
     console.log(`   ${icon} ${name}: ${pkg.version}${status}`);
 
@@ -97,17 +97,17 @@ function checkVersions() {
   console.log('');
 
   if (allSynced) {
-    console.log('✅ 모든 앱 버전이 동기화되어 있습니다.\n');
+    console.log('✅ All application versions are synchronized.\n');
   } else {
-    console.log('⚠️  버전이 동기화되지 않은 앱이 있습니다.\n');
-    console.log('   동기화하려면: node scripts/sync-versions.mjs\n');
+    console.log('⚠️  Some application versions are not synchronized.\n');
+    console.log('   Run to synchronize: node scripts/sync-versions.mjs\n');
   }
 
   return allSynced;
 }
 
 /**
- * 버전 동기화 실행
+ * Synchronize versions.
  */
 function syncVersions(targetVersion) {
   const rootPackageJsonPath = join(ROOT_DIR, 'package.json');
@@ -115,20 +115,20 @@ function syncVersions(targetVersion) {
   const currentVersion = rootPackageJson.version;
   const newVersion = targetVersion || currentVersion;
 
-  console.log('\n🔄 버전 동기화 시작\n');
-  console.log(`   대상 버전: ${newVersion}`);
+  console.log('\n🔄 Starting version synchronization\n');
+  console.log(`   Target version: ${newVersion}`);
   console.log('   ─────────────────────────');
 
-  // root package.json 업데이트 (새 버전이 지정된 경우)
+  // Update the root package.json when a new version is specified.
   if (targetVersion && targetVersion !== currentVersion) {
     rootPackageJson.version = newVersion;
     writePackageJson(rootPackageJsonPath, rootPackageJson);
     console.log(`   ✓ root: ${currentVersion} → ${newVersion}`);
   } else {
-    console.log(`   ✓ root: ${currentVersion} (유지)`);
+    console.log(`   ✓ root: ${currentVersion} (unchanged)`);
   }
 
-  // apps 폴더의 package.json 업데이트
+  // Update package.json files under apps.
   const appsPackages = findAppsPackageJsons();
 
   for (const { name, path } of appsPackages) {
@@ -140,15 +140,15 @@ function syncVersions(targetVersion) {
       writePackageJson(path, pkg);
       console.log(`   ✓ ${name}: ${oldVersion} → ${newVersion}`);
     } else {
-      console.log(`   ✓ ${name}: ${oldVersion} (유지)`);
+      console.log(`   ✓ ${name}: ${oldVersion} (unchanged)`);
     }
   }
 
-  console.log('\n✅ 버전 동기화 완료!\n');
+  console.log('\n✅ Version synchronization complete.\n');
 }
 
 /**
- * 메인 함수
+ * Main entry point.
  */
 function main() {
   const args = process.argv.slice(2);
@@ -160,13 +160,13 @@ function main() {
 
   if (args.includes('--help') || args.includes('-h')) {
     console.log(`
-사용법:
-  node scripts/sync-versions.mjs              root 버전으로 동기화
-  node scripts/sync-versions.mjs <version>    지정된 버전으로 동기화
-  node scripts/sync-versions.mjs --check      버전 동기화 상태 확인
-  node scripts/sync-versions.mjs --help       도움말 표시
+Usage:
+  node scripts/sync-versions.mjs              Synchronize with the root version
+  node scripts/sync-versions.mjs <version>    Synchronize with a specified version
+  node scripts/sync-versions.mjs --check      Check version synchronization
+  node scripts/sync-versions.mjs --help       Show help
 
-예시:
+Examples:
   node scripts/sync-versions.mjs 1.2.0
   node scripts/sync-versions.mjs 2.0.0-beta.1
 `);
@@ -175,10 +175,10 @@ function main() {
 
   const targetVersion = args[0];
 
-  // 버전 형식 검증 (지정된 경우)
+  // Validate the version format when provided.
   if (targetVersion && !/^\d+\.\d+\.\d+(-[\w.]+)?$/.test(targetVersion)) {
-    console.error(`\n❌ 잘못된 버전 형식: ${targetVersion}`);
-    console.error('   올바른 형식: 1.2.3 또는 1.2.3-beta.1\n');
+    console.error(`\n❌ Invalid version format: ${targetVersion}`);
+    console.error('   Expected format: 1.2.3 or 1.2.3-beta.1\n');
     process.exit(1);
   }
 

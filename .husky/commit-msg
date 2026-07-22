@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+if grep -vE '^[[:space:]]*(#|$)' "$1" | LC_ALL=C grep -q '[^ -~]'; then
+  echo 'Commit messages must be written in English using ASCII characters.'
+  exit 1
+fi

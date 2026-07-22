@@ -12,7 +12,7 @@ const reporters = process.env.GITHUB_ACTIONS === 'true' ? ['default', 'github-ac
 // Add any custom config to be passed to Jest
 const customJestConfig = {
   reporters,
-  // CI step summary가 coverage-summary.json을 jq로 파싱하므로 json-summary 리포트 추가.
+  // CI parses coverage-summary.json for its step summary.
   coverageReporters: ['json', 'lcov', 'text', 'clover', 'json-summary'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   testEnvironment: 'jsdom',
@@ -27,9 +27,9 @@ const customJestConfig = {
     '!**/node_modules/**',
     '!**/coverage/**',
     '!**/__tests__/**',
-    // RSC 페이지/레이아웃은 E2E로 커버
+    // Cover RSC pages and layouts with E2E tests.
     '!app/**/*.{js,jsx,ts,tsx}',
-    // Provider/래퍼 컴포넌트 제외
+    // Exclude provider and wrapper components.
     '!components/providers.tsx',
   ],
   coverageThreshold: {

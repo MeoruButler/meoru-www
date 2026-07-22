@@ -13,7 +13,7 @@
   "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "es5",
-  // Import 정렬: 1) 외부 → 2) @meoru/* → 3) @/ 내부 → 4) 상대경로 → 5) CSS/스타일
+  // Import order: 1) external, 2) @meoru/*, 3) @/ internal, 4) relative, 5) CSS/styles
   "sortImports": {
     "internalPattern": ["@/"],
     "customGroups": [
@@ -31,9 +31,11 @@
       "unknown",
     ],
   },
-  // Tailwind v4 + shadcn/ui 사용. class 정렬은 일괄 normalize 후 활성화 권장 (현재 비활성).
+  // Tailwind v4 + shadcn/ui. Enable class sorting after a one-time normalization (currently disabled).
   // "sortTailwindcss": true,
   "ignorePatterns": [
+    ".agents/**",
+    ".claude/**",
     ".github/**",
     ".vscode/**",
     "**/.turbo/**",
