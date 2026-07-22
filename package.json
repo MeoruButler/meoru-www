@@ -1,0 +1,56 @@
+{
+  "name": "meoru-www",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint lint:root",
+    "lint:fix": "turbo run lint:fix lint:root:fix",
+    "lint:root": "oxlint --ignore-pattern 'apps/**' --ignore-pattern 'packages/**' .",
+    "lint:root:fix": "oxlint --fix --ignore-pattern 'apps/**' --ignore-pattern 'packages/**' .",
+    "format": "turbo run format:check format:root:check",
+    "format:fix": "turbo run format:fix format:root:fix",
+    "format:check": "turbo run format:check format:root:check",
+    "format:root:check": "oxfmt --check . '!apps/**' '!packages/**'",
+    "format:root:fix": "oxfmt . '!apps/**' '!packages/**'",
+    "quality": "turbo run lint lint:root format:check format:root:check",
+    "quality:fix": "turbo run lint:fix lint:root:fix format:fix format:root:fix",
+    "check-types": "turbo run check-types",
+    "test": "turbo run test",
+    "test:coverage": "turbo run test:coverage",
+    "test:ci": "turbo run test:ci",
+    "test:e2e": "turbo run test:e2e",
+    "knip": "knip",
+    "turbo:clean": "turbo run clean && rm -rf node_modules .turbo",
+    "affected": "pnpm quality && turbo run build test --filter='[HEAD^1]'",
+    "prepare": "husky",
+    "version:sync": "node scripts/sync-versions.mjs",
+    "version:check": "node scripts/sync-versions.mjs --check"
+  },
+  "devDependencies": {
+    "eslint-plugin-turbo": "^2.10.2",
+    "husky": "^9.0.11",
+    "knip": "^5.86.0",
+    "lint-staged": "^16.4.0",
+    "oxfmt": "^0.47.0",
+    "oxlint": "^1.67.0",
+    "portless": "^0.14.0",
+    "turbo": "^2.10.2",
+    "typescript": "^5.9.3",
+    "typescript-go": "npm:typescript@7.0.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mjs,cjs,mts,cts}": [
+      "oxlint --fix",
+      "oxfmt --no-error-on-unmatched-pattern"
+    ],
+    "*.{md,mdx,json,jsonc,json5,yaml,yml,css,scss,less,html}": [
+      "oxfmt --no-error-on-unmatched-pattern"
+    ]
+  },
+  "engines": {
+    "node": ">=24.11.1"
+  },
+  "packageManager": "pnpm@11.13.1"
+}

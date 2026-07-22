@@ -1,0 +1,10 @@
+{
+  "extends": "@meoru/typescript-config/base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "lib": ["es2023"],
+    "types": ["node"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

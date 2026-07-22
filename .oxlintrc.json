@@ -1,0 +1,52 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "typescript", "oxc", "unicorn", "react", "nextjs"],
+  "jsPlugins": [
+    {
+      "name": "turbo",
+      "specifier": "eslint-plugin-turbo"
+    }
+  ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2024": true
+  },
+  "ignorePatterns": [
+    "node_modules/**",
+    ".turbo/**",
+    ".next/**",
+    "dist/**",
+    "out/**",
+    "build/**",
+    "coverage/**",
+    "test-results/**",
+    "playwright-report/**",
+    "*.tsbuildinfo"
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "eslint/no-shadow": "off",
+    "unicorn/consistent-function-scoping": "off",
+    "eslint/no-useless-constructor": "off",
+    "turbo/no-undeclared-env-vars": "warn",
+    "jsx-a11y/prefer-tag-over-role": "off"
+  },
+  "overrides": [
+    {
+      "files": ["**/e2e/**/*.{ts,js}"],
+      "plugins": ["eslint", "typescript", "oxc", "unicorn"]
+    },
+    {
+      "files": ["**/scripts/**/*.{ts,js,mjs,cjs}"],
+      "rules": {
+        "unicorn/no-process-exit": "off",
+        "eslint/no-underscore-dangle": ["warn", { "allow": ["__dirname", "__filename"] }]
+      }
+    }
+  ]
+}

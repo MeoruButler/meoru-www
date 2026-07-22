@@ -1,0 +1,22 @@
+{
+  "name": "@meoru/shared",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./utils/*": "./src/utils/*.ts"
+  },
+  "scripts": {
+    "check-types": "node ../../node_modules/typescript-go/bin/tsc --noEmit",
+    "lint": "oxlint --no-error-on-unmatched-pattern .",
+    "lint:fix": "oxlint --fix --no-error-on-unmatched-pattern .",
+    "format": "oxfmt --check --no-error-on-unmatched-pattern .",
+    "format:check": "oxfmt --check --no-error-on-unmatched-pattern .",
+    "format:fix": "oxfmt --no-error-on-unmatched-pattern .",
+    "clean": "rm -rf node_modules/.cache"
+  },
+  "devDependencies": {
+    "@meoru/typescript-config": "workspace:*",
+    "typescript": "^5.9.3"
+  }
+}

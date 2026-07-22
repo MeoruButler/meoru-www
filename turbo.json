@@ -1,0 +1,104 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "ui": "tui",
+  "globalDependencies": ["package.json", "pnpm-lock.yaml", "turbo.json"],
+  "globalEnv": ["NODE_ENV", "CI", "VERCEL", "VERCEL_ENV"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$"],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        "!.next/dev/**",
+        "next-env.d.ts",
+        "dist/**",
+        "out/**",
+        "*.tsbuildinfo"
+      ],
+      "env": ["NEXT_PUBLIC_*", "ANALYZE"]
+    },
+    "lint": {
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/.oxlintrc.json"],
+      "outputs": []
+    },
+    "lint:fix": {
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/.oxlintrc.json"],
+      "cache": false
+    },
+    "//#lint:root": {
+      "inputs": ["scripts/**/*.{ts,tsx,js,jsx,mjs,cjs,mts,cts}", "*.{ts,tsx,js,jsx,mjs,cjs,mts,cts}", ".oxlintrc.json"],
+      "outputs": []
+    },
+    "//#lint:root:fix": {
+      "inputs": ["scripts/**/*.{ts,tsx,js,jsx,mjs,cjs,mts,cts}", "*.{ts,tsx,js,jsx,mjs,cjs,mts,cts}", ".oxlintrc.json"],
+      "cache": false
+    },
+    "format": {
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/.oxfmtrc.jsonc"],
+      "outputs": []
+    },
+    "format:fix": {
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/.oxfmtrc.jsonc"],
+      "cache": false
+    },
+    "format:check": {
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/.oxfmtrc.jsonc"],
+      "outputs": []
+    },
+    "//#format:root:check": {
+      "inputs": [
+        "scripts/**",
+        "*.{ts,tsx,js,jsx,mjs,cjs,mts,cts,json,jsonc,json5,yaml,yml,md,mdx,css,scss,less,html}",
+        ".oxfmtrc.jsonc"
+      ],
+      "outputs": []
+    },
+    "//#format:root:fix": {
+      "inputs": [
+        "scripts/**",
+        "*.{ts,tsx,js,jsx,mjs,cjs,mts,cts,json,jsonc,json5,yaml,yml,md,mdx,css,scss,less,html}",
+        ".oxfmtrc.jsonc"
+      ],
+      "cache": false
+    },
+    "check-types": {
+      "dependsOn": ["^build", "build"],
+      "inputs": ["$TURBO_DEFAULT$", "tsconfig*.json"],
+      "outputs": []
+    },
+    "knip": {
+      "inputs": ["$TURBO_DEFAULT$", "knip.config.ts", "**/*.{ts,tsx,js,jsx}"],
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["^build", "build"],
+      "inputs": ["$TURBO_DEFAULT$", "jest.config.*", "vitest.config.*"],
+      "outputs": ["coverage/**"]
+    },
+    "test:coverage": {
+      "dependsOn": ["^build", "build"],
+      "inputs": ["$TURBO_DEFAULT$", "jest.config.*", "vitest.config.*"],
+      "outputs": ["coverage/**"]
+    },
+    "test:ci": {
+      "dependsOn": ["^build", "build"],
+      "inputs": ["$TURBO_DEFAULT$", "jest.config.*", "vitest.config.*"],
+      "outputs": ["coverage/**"],
+      "env": ["GITHUB_ACTIONS"]
+    },
+    "test:e2e": {
+      "dependsOn": ["build"],
+      "inputs": ["$TURBO_DEFAULT$", "**/*.{ts,tsx,js,jsx}", "e2e/**/*", "playwright.config.*"],
+      "outputs": ["test-results/**", "playwright-report/**"],
+      "passThroughEnv": ["PLAYWRIGHT_*", "CI"]
+    },
+    "clean": {
+      "cache": false
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}
