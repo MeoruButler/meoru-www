@@ -8,10 +8,10 @@ export function Counter() {
   const [count, setCount] = React.useState(0);
 
   return (
-    <Card className="w-[300px]">
+    <Card className="w-75">
       <CardContent className="space-y-4">
         <div className="flex justify-center">
-          <Badge variant="secondary" className="text-2xl px-4 py-2">
+          <Badge variant="default" className="text-2xl px-4 py-2">
             Count: {count}
           </Badge>
         </div>
@@ -19,7 +19,7 @@ export function Counter() {
           <Button variant="outline" size="icon" onClick={() => setCount(count - 1)} className="h-10 w-10">
             -
           </Button>
-          <Button variant="outline" size="icon" onClick={() => setCount(count + 1)} className="h-10 w-10">
+          <Button variant="default" size="icon" onClick={() => setCount(count + 1)} className="h-10 w-10">
             +
           </Button>
         </div>

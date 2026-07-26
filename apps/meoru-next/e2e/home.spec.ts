@@ -5,6 +5,14 @@ test.describe('Home Page', () => {
     await page.goto('/');
     await expect(page.getByRole('heading', { name: 'Meoru Next' })).toBeVisible();
     await expect(page.getByText('Count: 0')).toBeVisible();
+    await expect(page.locator('body')).toHaveCSS('font-family', /Geist Variable/);
+    await expect
+      .poll(() =>
+        page.evaluate(() =>
+          Array.from(document.fonts).some(font => font.family === 'Geist Variable' && font.status === 'loaded')
+        )
+      )
+      .toBe(true);
   });
 
   test('increments the counter', async ({ page }) => {
