@@ -13,8 +13,6 @@ const config: KnipConfig = {
       ignoreUnresolved: ['next'],
     },
   },
-  // Used as a manual CLI.
-  ignoreDependencies: ['shadcn'],
 };
 
 export default config;

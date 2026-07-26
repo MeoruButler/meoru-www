@@ -1,20 +1,24 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "radix-nova",
+  "style": "radix-mira",
   "rsc": true,
   "tsx": true,
   "tailwind": {
     "config": "",
     "css": "src/styles/globals.css",
-    "baseColor": "neutral",
+    "baseColor": "mauve",
     "cssVariables": true
   },
-  "iconLibrary": "lucide",
+  "iconLibrary": "hugeicons",
+  "rtl": false,
   "aliases": {
     "components": "@meoru/ui/components",
     "utils": "@meoru/ui/lib/utils",
-    "hooks": "@meoru/ui/hooks",
+    "ui": "@meoru/ui/components",
     "lib": "@meoru/ui/lib",
-    "ui": "@meoru/ui/components"
-  }
+    "hooks": "@meoru/ui/hooks"
+  },
+  "menuColor": "inverted-translucent",
+  "menuAccent": "subtle",
+  "registries": {}
 }
