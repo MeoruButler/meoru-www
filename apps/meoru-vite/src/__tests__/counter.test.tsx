@@ -10,6 +10,14 @@ describe('Counter', () => {
     expect(screen.getByText('Count: 0')).toBeInTheDocument();
   });
 
+  it('uses the shared primary variants', () => {
+    render(<Counter />);
+
+    expect(screen.getByText('Count: 0')).toHaveAttribute('data-variant', 'default');
+    expect(screen.getByRole('button', { name: '-' })).toHaveAttribute('data-variant', 'outline');
+    expect(screen.getByRole('button', { name: '+' })).toHaveAttribute('data-variant', 'default');
+  });
+
   it('increments count when + button is clicked', async () => {
     const user = userEvent.setup();
     render(<Counter />);
