@@ -11,7 +11,7 @@ export function Counter() {
     <Card className="w-75">
       <CardContent className="space-y-4">
         <div className="flex justify-center">
-          <Badge variant="default" className="text-2xl px-4 py-2">
+          <Badge variant="default" className="px-4 py-2 text-2xl">
             Count: {count}
           </Badge>
         </div>
