@@ -3,6 +3,7 @@ import { expect, test } from '@playwright/test';
 test.describe('Home Page', () => {
   test('displays the heading and counter', async ({ page }) => {
     await page.goto('/');
+    await expect(page).toHaveTitle('Meoru React');
     await expect(page.getByRole('heading', { name: 'Meoru React' })).toBeVisible();
     await expect(page.getByText('Count: 0')).toBeVisible();
     await expect(page.locator('body')).toHaveCSS('font-family', /Geist Variable/);
