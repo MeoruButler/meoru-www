@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@meoru/typescript-config": "workspace:*",
-    "@playwright/test": "^1.61.1",
+    "@playwright/test": "^1.63.0",
     "@types/node": "^24.13.3",
     "typescript": "npm:@typescript/typescript6@^6.0.2"
   },

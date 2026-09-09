@@ -31,8 +31,12 @@
       "unknown",
     ],
   },
-  // Tailwind v4 + shadcn/ui. Enable class sorting after a one-time normalization (currently disabled).
-  // "sortTailwindcss": true,
+  // Tailwind v4 + shadcn/ui class sorting. `stylesheet` points at the shared theme so custom
+  // utilities (bg-background, border-border, ...) sort as known classes instead of trailing unknowns.
+  "sortTailwindcss": {
+    "stylesheet": "./packages/ui/src/styles/globals.css",
+    "functions": ["cn", "cva"],
+  },
   "ignorePatterns": [
     ".agents/**",
     ".claude/**",

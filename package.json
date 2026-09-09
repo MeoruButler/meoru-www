@@ -31,14 +31,14 @@
   },
   "devDependencies": {
     "@typescript/native": "npm:typescript@^7.0.2",
-    "eslint-plugin-turbo": "^2.10.5",
+    "eslint-plugin-turbo": "^2.10.12",
     "husky": "^9.1.7",
-    "knip": "^6.27.0",
-    "lint-staged": "^17.1.0",
-    "oxfmt": "^0.59.0",
-    "oxlint": "^1.74.0",
-    "portless": "^0.15.4",
-    "turbo": "^2.10.5",
+    "knip": "^6.34.0",
+    "lint-staged": "^17.5.0",
+    "oxfmt": "^0.67.0",
+    "oxlint": "^1.82.0",
+    "portless": "^0.15.6",
+    "turbo": "^2.10.12",
     "typescript": "npm:@typescript/typescript6@^6.0.2"
   },
   "lint-staged": {
@@ -53,5 +53,5 @@
   "engines": {
     "node": ">=24.11.1"
   },
-  "packageManager": "pnpm@11.15.1"
+  "packageManager": "pnpm@12.3.4"
 }

@@ -20,8 +20,9 @@ packages/
 ## 도구
 
 - 패키지 관리자: `packageManager`로 고정된 pnpm
-- 런타임: `.nvmrc`에 지정된 Node.js 24.11.1
+- 런타임: `.nvmrc`에 지정된 Node.js 24.21.0
 - 태스크 러너: Turborepo
+- 타입 검사: `@typescript/native` 별칭으로 설치한 TypeScript 7(네이티브)의 `tsc`를 사용하고, 컴파일러를 라이브러리로 불러오는 도구를 위해 `typescript`는 TypeScript 6으로 둔다
 - 린트 및 포맷: oxlint와 oxfmt
 - 미사용 코드 탐지: knip
 - Git 훅: Husky와 lint-staged
