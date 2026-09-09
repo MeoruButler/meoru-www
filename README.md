@@ -20,8 +20,9 @@ packages/
 ## Tooling
 
 - Package manager: pnpm pinned through `packageManager`
-- Runtime: Node.js 24.11.1 from `.nvmrc`
+- Runtime: Node.js 24.21.0 from `.nvmrc`
 - Task runner: Turborepo
+- Type checking: `tsc` from TypeScript 7 (native) via the `@typescript/native` alias; `typescript` resolves to TypeScript 6 for tooling that loads the compiler as a library
 - Linting and formatting: oxlint and oxfmt
 - Unused code detection: knip
 - Git hooks: Husky and lint-staged
