@@ -8,6 +8,7 @@ A pnpm and Turborepo-based web monorepo.
 
 ```text
 apps/
+  meoru-diary/   Photographic diary (Next.js App Router)
   meoru-next/    Next.js App Router application
   meoru-vite/    React + Vite application
 packages/

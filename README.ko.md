@@ -8,6 +8,7 @@ pnpm과 Turborepo 기반 웹 모노레포입니다.
 
 ```text
 apps/
+  meoru-diary/   사진 다이어리 (Next.js App Router)
   meoru-next/    Next.js App Router 애플리케이션
   meoru-vite/    React + Vite 애플리케이션
 packages/
