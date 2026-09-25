@@ -1,0 +1,53 @@
+{
+  "name": "meoru-diary",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "PORTLESS_PORT=1355 PORTLESS_HTTPS=0 portless run --name diary.meoru next dev",
+    "build": "next build",
+    "start": "next start --port 3002",
+    "start:e2e": "next start --port 3002",
+    "photos:samples": "node scripts/generate-sample-photos.mjs",
+    "photos:manifest": "node scripts/build-photo-manifest.mjs",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint --fix .",
+    "format": "oxfmt --check .",
+    "format:fix": "oxfmt .",
+    "format:check": "oxfmt --check .",
+    "check-types": "tsc --noEmit",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --coverage --watchAll=false",
+    "test:e2e": "sh ../../scripts/playwright-e2e.sh",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:debug": "playwright test --debug",
+    "clean": "rm -rf .next .turbo coverage test-results playwright-report node_modules/.cache"
+  },
+  "dependencies": {
+    "@meoru/ui": "workspace:*",
+    "next": "^16.3.4",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@meoru/playwright-config": "workspace:*",
+    "@meoru/typescript-config": "workspace:*",
+    "@playwright/test": "^1.63.0",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.13.3",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "jest": "^30.5.1",
+    "jest-environment-jsdom": "^30.5.1",
+    "sharp": "^0.35.4",
+    "typescript": "npm:@typescript/typescript6@^6.0.2"
+  }
+}

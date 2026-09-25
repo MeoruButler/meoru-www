@@ -1,0 +1,182 @@
+[
+  {
+    "id": "01-spring-drive/sample-01",
+    "src": "/photos/01-spring-drive/sample-01.jpg",
+    "width": 1600,
+    "height": 1067,
+    "dominantColor": "#989888",
+    "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAgCdASoUAA0APt1cp00/pSOiMAgD8BuJZwCuHC5JAAD+yvPPdv/lHyxzp7if1Qe83vXSGwU4InOIfAAAAA==",
+    "alt": "sample 01",
+    "chapter": "spring drive"
+  },
+  {
+    "id": "01-spring-drive/sample-02",
+    "src": "/photos/01-spring-drive/sample-02.jpg",
+    "width": 1067,
+    "height": 1600,
+    "dominantColor": "#b8a888",
+    "blurDataURL": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAwCdASoUAB4APt1gqU6opaOjMBgIARAbiWcAuwAPSw8QuzdjU0AA/tOVIlfK/yGi+XLse4P6RshdLeeB8Nf1h2n4ReidrlVTPAAA",
+    "alt": "sample 02",
+    "chapter": "spring drive"
+  },
+  {
+    "id": "01-spring-drive/sample-03",
+    "src": "/photos/01-spring-drive/sample-03.jpg",
+    "width": 1280,
+    "height": 1600,
+    "dominantColor": "#788898",
+    "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADQAwCdASoUABkAPt1cqE8oriOiMBgIAcAbiWcAwNwQ34OF0TTPNyAA/q9MQSLqS8fBxrdNTFRi5KKcCw/4pu/5I3/cAAAA",
+    "alt": "sample 03",
+    "chapter": "spring drive"
+  },
+  {
+    "id": "01-spring-drive/sample-04",
+    "src": "/photos/01-spring-drive/sample-04.jpg",
+    "width": 1600,
+    "height": 1600,
+    "dominantColor": "#c8a898",
+    "blurDataURL": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAABwAwCdASoUABQAPt1gpk6opaQiKA1REBuJZQAARWYqSaSsUAAA/ulWnec/bHuOrxfoPjK51oo/v8tz9dz8BDcDb38cAUAgAAA=",
+    "alt": "sample 04",
+    "chapter": "spring drive"
+  },
+  {
+    "id": "01-spring-drive/sample-05",
+    "src": "/photos/01-spring-drive/sample-05.jpg",
+    "width": 1600,
+    "height": 900,
+    "dominantColor": "#889888",
+    "blurDataURL": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADQAwCdASoUAAsAPt1apkyopSOiMAgBEBuJZwCuHCP63ChbCGPuJAAA/sS7a1F/+w/JMMB2yPi0VaAA",
+    "alt": "sample 05",
+    "chapter": "spring drive"
+  },
+  {
+    "id": "01-spring-drive/sample-06",
+    "src": "/photos/01-spring-drive/sample-06.jpg",
+    "width": 1600,
+    "height": 1067,
+    "dominantColor": "#a898a8",
+    "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAgCdASoUAA0APt1ep00/pSOiMAgD8BuJZwC2yDLxQAD+3d1s6F07Y9pFk/nqSLtrJvWDlhV+3aetdgMKAA==",
+    "alt": "sample 06",
+    "chapter": "spring drive"
+  },
+  {
+    "id": "01-spring-drive/sample-07",
+    "src": "/photos/01-spring-drive/sample-07.jpg",
+    "width": 1067,
+    "height": 1600,
+    "dominantColor": "#888878",
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQBACdASoUAB4APt1kpk2opiOiMBgIARAbiWkAzFgM+D5LQR3EZEXZWtrJgebfwAD+w9kReGf/cy7ELgGt7gL5TwqMhXIi95rB64KyoAA=",
+    "alt": "sample 07",
+    "chapter": "spring drive"
+  },
+  {
+    "id": "02-midsummer-streets/sample-08",
+    "src": "/photos/02-midsummer-streets/sample-08.jpg",
+    "width": 1280,
+    "height": 1600,
+    "dominantColor": "#989888",
+    "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAQBACdASoUABkAPt1aqE6oriOjMBgIAcAbiWkAxzAM9+Kr1eZURwy2AAD+w9mlmEJ9bUWpcLmQVEOqyLKrO8LFnfX/WCAA",
+    "alt": "sample 08",
+    "chapter": "midsummer streets"
+  },
+  {
+    "id": "02-midsummer-streets/sample-09",
+    "src": "/photos/02-midsummer-streets/sample-09.jpg",
+    "width": 1600,
+    "height": 1600,
+    "dominantColor": "#b8a888",
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAABQAwCdASoUABQAPt1gp04opaQiKA1REBuJZwDDNBahI3KRgAD+4907zn7Y9x1eKho0/CqKKP7/Kzi/ZlgTDrugu6YAAA==",
+    "alt": "sample 09",
+    "chapter": "midsummer streets"
+  },
+  {
+    "id": "02-midsummer-streets/sample-10",
+    "src": "/photos/02-midsummer-streets/sample-10.jpg",
+    "width": 1600,
+    "height": 900,
+    "dominantColor": "#788898",
+    "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAABwAwCdASoUAAsAPt1cpkyopSOiMAgBEBuJZwAAPF6cxx16DAAA/rCdxuS8iX+m0sxHa92dwBrntpQAAAA=",
+    "alt": "sample 10",
+    "chapter": "midsummer streets"
+  },
+  {
+    "id": "02-midsummer-streets/sample-11",
+    "src": "/photos/02-midsummer-streets/sample-11.jpg",
+    "width": 1600,
+    "height": 1067,
+    "dominantColor": "#c8a898",
+    "blurDataURL": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADwAgCdASoUAA0APt1apky/pSOiMAgD8BuJYwC7AC5JAAD+5dxhYX/6hNaIRhrdBN2XvzcyF69YOWFX7dp61y94sAA=",
+    "alt": "sample 11",
+    "chapter": "midsummer streets"
+  },
+  {
+    "id": "02-midsummer-streets/sample-12",
+    "src": "/photos/02-midsummer-streets/sample-12.jpg",
+    "width": 1067,
+    "height": 1600,
+    "dominantColor": "#889888",
+    "blurDataURL": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACQAwCdASoUAB4APt1gp0y/paOiMAgD8BuJaQDIXC5T8IoHIYpwAP7k6ame/gLMMYtf6WwJOjaTFkp5QEW+W8VAAAA=",
+    "alt": "sample 12",
+    "chapter": "midsummer streets"
+  },
+  {
+    "id": "02-midsummer-streets/sample-13",
+    "src": "/photos/02-midsummer-streets/sample-13.jpg",
+    "width": 1280,
+    "height": 1600,
+    "dominantColor": "#a898a8",
+    "blurDataURL": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAwAwCdASoUABkAPt1ipk2oryMiMBgIAeAbiWcAxvQZi1eUAP7mtL01/4CzLrfXP8u56XutN66vJLXpRwjBg5rtef/uawZb/aRAAA==",
+    "alt": "sample 13",
+    "chapter": "midsummer streets"
+  },
+  {
+    "id": "03-late-light/sample-14",
+    "src": "/photos/03-late-light/sample-14.jpg",
+    "width": 1600,
+    "height": 1600,
+    "dominantColor": "#888878",
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAQBACdASoUABQAPsVSoEynpSMiN+gA8BiJaQDH5CaWeSFX8ozARjL7gAD+w9kVrCeT9WetY8QbLwHGMT4rhufCz39AAA==",
+    "alt": "sample 14",
+    "chapter": "late light"
+  },
+  {
+    "id": "03-late-light/sample-15",
+    "src": "/photos/03-late-light/sample-15.jpg",
+    "width": 1600,
+    "height": 900,
+    "dominantColor": "#989888",
+    "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAgCdASoUAAsAPt1cpkyopSOiMAgBEBuJZwCuHC5JAAD+w9njPxN1Ca3eHmt7a8ny9YOWFX7dp61sRwAAAA==",
+    "alt": "sample 15",
+    "chapter": "late light"
+  },
+  {
+    "id": "03-late-light/sample-16",
+    "src": "/photos/03-late-light/sample-16.jpg",
+    "width": 1600,
+    "height": 1067,
+    "dominantColor": "#b8a888",
+    "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAACwAwCdASoUAA0APt1apky/pSOiMAgD8BuJYwC7ACHhgl5bb2jRMAD+w8B6lhi2xV+/snei2SGuxMQvIAA=",
+    "alt": "sample 16",
+    "chapter": "late light"
+  },
+  {
+    "id": "03-late-light/sample-17",
+    "src": "/photos/03-late-light/sample-17.jpg",
+    "width": 1067,
+    "height": 1600,
+    "dominantColor": "#788898",
+    "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAwBACdASoUAB4APt1gqEy/paQiMAgD8BuJZwDDNCG/ByOGcg3FwChsvxAA/q9MQLC993uFi/hwYO1KNS8YZSDk3q3oAAAA",
+    "alt": "sample 17",
+    "chapter": "late light"
+  },
+  {
+    "id": "03-late-light/sample-18",
+    "src": "/photos/03-late-light/sample-18.jpg",
+    "width": 1280,
+    "height": 1600,
+    "dominantColor": "#c8a898",
+    "blurDataURL": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAwCdASoUABkAPt1iq08opS22qAqq0BuJZQCdABEduy7gWaoacfqwAP7ezQB/hQtIgvncVSP3hj9OJX3I7punpO9Z3bEAAAA=",
+    "alt": "sample 18",
+    "chapter": "late light"
+  }
+]

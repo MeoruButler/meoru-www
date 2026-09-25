@@ -1,0 +1,99 @@
+/* Notebook-specific styles that are not expressible as utilities. */
+
+:root {
+  /* Warm paper instead of pure white; text stays near-black. */
+  --background: oklch(0.967 0.004 84);
+  --foreground: oklch(0.16 0 0);
+  /* 4.9:1 against the paper, so 12px labels pass WCAG AA (1.4.3). */
+  --muted-foreground: oklch(0.44 0 0);
+  --border: oklch(0.86 0.004 84);
+  /* Focus ring in ink so it stays above 3:1 on paper and on photos (1.4.11). */
+  --ring: oklch(0.25 0 0);
+}
+
+/*
+ * Staggered sticker grid: 2 / 3 / 4 columns, every other column pushed down half a row so the
+ * page reads as scattered stickers rather than a catalogue. Widths here must stay in sync with
+ * `STICKER_SIZES` in `lib/sticker-layout.ts`.
+ */
+.sticker-grid {
+  --cols: 2;
+  --col-gap: 6vw;
+  --row-gap: 18vh;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  row-gap: var(--row-gap);
+  align-items: start;
+  padding-bottom: calc(var(--row-gap) / 2);
+}
+
+.sticker-grid > .sticker:nth-of-type(2n) {
+  transform: translateY(calc(var(--row-gap) / 2)) rotate(var(--tilt, 0deg));
+}
+
+@media (min-width: 768px) {
+  .sticker-grid {
+    --cols: 3;
+  }
+  .sticker-grid > .sticker:nth-of-type(2n) {
+    transform: rotate(var(--tilt, 0deg));
+  }
+  .sticker-grid > .sticker:nth-of-type(3n + 2) {
+    transform: translateY(calc(var(--row-gap) / 2)) rotate(var(--tilt, 0deg));
+  }
+}
+
+@media (min-width: 1024px) {
+  .sticker-grid {
+    --cols: 4;
+    --row-gap: 22vh;
+  }
+  .sticker-grid > .sticker:nth-of-type(3n + 2) {
+    transform: rotate(var(--tilt, 0deg));
+  }
+  .sticker-grid > .sticker:nth-of-type(4n + 2),
+  .sticker-grid > .sticker:nth-of-type(4n + 4) {
+    transform: translateY(calc(var(--row-gap) / 2)) rotate(var(--tilt, 0deg));
+  }
+}
+
+/* Keep keyboard focus clear of the fixed bookmark strip on phones (WCAG 2.4.11). */
+:focus-visible {
+  scroll-margin-top: 5rem;
+  scroll-margin-bottom: 2rem;
+}
+
+.sticker {
+  transform: rotate(var(--tilt, 0deg));
+  transform-origin: center;
+  /* Skip layout and paint for stickers far outside the viewport; the size is known up front. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 40vh;
+}
+
+.sticker-frame {
+  box-shadow:
+    0 1px 2px oklch(0 0 0 / 6%),
+    0 10px 28px -12px oklch(0 0 0 / 22%);
+}
+
+.bookmark-tab {
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+}
+
+@media (min-width: 768px) {
+  .bookmark-tab {
+    writing-mode: vertical-rl;
+    border-right: 0;
+    border-radius: 3px 0 0 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticker-frame img,
+  .bookmark-tab {
+    transition: none;
+  }
+}

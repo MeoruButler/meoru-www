@@ -6,6 +6,7 @@ These instructions apply to the entire repository. A more specific `AGENTS.md` m
 
 ## Project Map
 
+- `apps/meoru-diary`: photographic diary site (Next.js App Router, Jest tests); see its README for the image loading strategy.
 - `apps/meoru-next`: Next.js App Router application with Jest tests.
 - `apps/meoru-vite`: React + Vite application with Vitest tests.
 - `packages/ui`: shared shadcn/ui-based React components.
