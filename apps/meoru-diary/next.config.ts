@@ -1,30 +1,46 @@
 import type { NextConfig } from 'next';
 
-import { getImageCdnRemotePattern } from './lib/image-cdn';
+import { DEVICE_SIZES, getImageProxy, IMAGE_SIZES } from './lib/image-variants';
 
-const cdnUrl = process.env.NEXT_PUBLIC_IMAGE_CDN_URL;
-const remotePattern = getImageCdnRemotePattern(cdnUrl);
+// Validates the image env (failing the build on bad values) and returns the proxy rewrite when
+// images are served same-origin. See `lib/image-variants.ts` for the three hosting modes.
+const imageProxy = getImageProxy(process.env.NEXT_PUBLIC_IMAGE_CDN_URL, process.env.IMAGE_ORIGIN_URL);
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ['diary.meoru.localhost'],
   transpilePackages: ['@meoru/ui'],
   typedRoutes: true,
   images: {
-    // Without a CDN, `public/photos` is served through the built-in optimizer. Once
-    // `NEXT_PUBLIC_IMAGE_CDN_URL` is set, the custom loader builds edge-transform URLs instead.
-    // Registering `loader: 'custom'` disables `/_next/image`, so it must stay conditional.
-    ...(cdnUrl ? { loader: 'custom' as const, loaderFile: './lib/image-loader.ts' } : {}),
+    // Without `NEXT_PUBLIC_IMAGE_CDN_URL`, `public/photos` is served through the built-in optimizer.
+    // With it, stickers point straight at pre-generated variants (`lib/image-variants.ts`) and
+    // `/_next/image` is never called, so Vercel's transformation quota stays untouched.
     formats: ['image/avif', 'image/webp'],
     // Stickers render at 19-43vw (see `STICKER_SIZES`), so the srcset needs widths well below the
     // viewport: 256-640 for phones, 828-1600 for 2x desktops. Anything above 1920 is wasted bytes.
-    deviceSizes: [640, 828, 1080, 1280, 1600, 1920],
-    imageSizes: [256, 384, 512],
+    // Shared with the variant generator so every width the srcset lists exists in the bucket.
+    deviceSizes: DEVICE_SIZES,
+    imageSizes: IMAGE_SIZES,
     qualities: [60, 75, 85],
     // Photo files are content-addressed, so the optimized variants can be cached for a year.
     minimumCacheTTL: 60 * 60 * 24 * 365,
-    // Only consulted by the built-in optimizer; lets the CDN act as a plain origin if the custom
-    // loader lines above are ever removed.
-    remotePatterns: remotePattern ? [remotePattern] : [],
+  },
+  async rewrites() {
+    return imageProxy ? [imageProxy] : [];
+  },
+  async headers() {
+    if (!imageProxy) return [];
+    return [
+      {
+        source: imageProxy.source,
+        headers: [
+          // Vercel caches external rewrites by default only for projects created on or after
+          // 2026-04-06; this opts older projects in so the bucket only sees cache misses.
+          { key: 'x-vercel-enable-rewrite-caching', value: '1' },
+          // Variants are content-addressed, so a year is safe even if an upload missed its header.
+          { key: 'CDN-Cache-Control', value: 'max-age=31536000' },
+        ],
+      },
+    ];
   },
 };
 

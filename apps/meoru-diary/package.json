@@ -10,6 +10,7 @@
     "start:e2e": "next start --port 3002",
     "photos:samples": "node scripts/generate-sample-photos.mjs",
     "photos:manifest": "node scripts/build-photo-manifest.mjs",
+    "photos:variants": "node scripts/build-image-variants.mjs",
     "lint": "oxlint .",
     "lint:fix": "oxlint --fix .",
     "format": "oxfmt --check .",
@@ -24,7 +25,7 @@
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:debug": "playwright test --debug",
-    "clean": "rm -rf .next .turbo coverage test-results playwright-report node_modules/.cache"
+    "clean": "rm -rf .next .turbo .variants coverage test-results playwright-report node_modules/.cache"
   },
   "dependencies": {
     "@meoru/ui": "workspace:*",

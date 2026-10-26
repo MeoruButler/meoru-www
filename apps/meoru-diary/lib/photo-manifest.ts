@@ -4,6 +4,9 @@ import sharp from 'sharp';
 
 import type { Photo } from '@/lib/photos';
 
+// Explicit `.ts`: `scripts/build-photo-manifest.mjs` loads this module through Node's type stripping.
+import { photoKey } from './photo-variants.ts';
+
 /**
  * Build-time photo manifest logic. Kept free of CLI concerns so the pipeline that the whole
  * loading strategy depends on (intrinsic size, dominant color, blur placeholder, hand-written
@@ -71,8 +74,6 @@ export type BuildManifestOptions = {
   photosDir: string;
   /** Previous manifest; `alt`, `caption`, and `chapter` are carried over by photo id. */
   existing?: ReadonlyMap<string, Photo>;
-  /** URL prefix for `src`, e.g. `/photos` locally or a bucket path on the CDN. */
-  srcPrefix?: string;
   /** Injected for tests; defaults to reading the file with sharp. */
   describe?: (filePath: string) => Promise<DescribedPhoto>;
 };
@@ -84,7 +85,6 @@ export type BuildManifestOptions = {
 export async function buildManifest({
   photosDir,
   existing = new Map(),
-  srcPrefix = '/photos',
   describe = describePhoto,
 }: BuildManifestOptions): Promise<Photo[]> {
   const chapterFolders = (await readdir(photosDir, { withFileTypes: true }))
@@ -102,7 +102,8 @@ export async function buildManifest({
       const described = await describe(filePath);
       manifest.push({
         id,
-        src: `${srcPrefix.replace(/\/$/, '')}/${folder}/${file}`,
+        src: `/photos/${folder}/${file}`,
+        key: photoKey(await readFile(filePath)),
         ...described,
         alt: previous?.alt ?? defaultAlt(file),
         chapter: previous?.chapter ?? humanizeChapter(folder),

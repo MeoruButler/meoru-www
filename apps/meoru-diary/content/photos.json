@@ -2,6 +2,7 @@
   {
     "id": "01-spring-drive/sample-01",
     "src": "/photos/01-spring-drive/sample-01.jpg",
+    "key": "bc227f66735bf58d/v1",
     "width": 1600,
     "height": 1067,
     "dominantColor": "#989888",
@@ -12,6 +13,7 @@
   {
     "id": "01-spring-drive/sample-02",
     "src": "/photos/01-spring-drive/sample-02.jpg",
+    "key": "451b5c9fe9de55c6/v1",
     "width": 1067,
     "height": 1600,
     "dominantColor": "#b8a888",
@@ -22,6 +24,7 @@
   {
     "id": "01-spring-drive/sample-03",
     "src": "/photos/01-spring-drive/sample-03.jpg",
+    "key": "96e3a9197bdd0b80/v1",
     "width": 1280,
     "height": 1600,
     "dominantColor": "#788898",
@@ -32,6 +35,7 @@
   {
     "id": "01-spring-drive/sample-04",
     "src": "/photos/01-spring-drive/sample-04.jpg",
+    "key": "63856fddf242ea6c/v1",
     "width": 1600,
     "height": 1600,
     "dominantColor": "#c8a898",
@@ -42,6 +46,7 @@
   {
     "id": "01-spring-drive/sample-05",
     "src": "/photos/01-spring-drive/sample-05.jpg",
+    "key": "e91cdfb239403632/v1",
     "width": 1600,
     "height": 900,
     "dominantColor": "#889888",
@@ -52,6 +57,7 @@
   {
     "id": "01-spring-drive/sample-06",
     "src": "/photos/01-spring-drive/sample-06.jpg",
+    "key": "2cffd21df4c389a7/v1",
     "width": 1600,
     "height": 1067,
     "dominantColor": "#a898a8",
@@ -62,6 +68,7 @@
   {
     "id": "01-spring-drive/sample-07",
     "src": "/photos/01-spring-drive/sample-07.jpg",
+    "key": "4a59715713071fcb/v1",
     "width": 1067,
     "height": 1600,
     "dominantColor": "#888878",
@@ -72,6 +79,7 @@
   {
     "id": "02-midsummer-streets/sample-08",
     "src": "/photos/02-midsummer-streets/sample-08.jpg",
+    "key": "0eb260e1066dd5d5/v1",
     "width": 1280,
     "height": 1600,
     "dominantColor": "#989888",
@@ -82,6 +90,7 @@
   {
     "id": "02-midsummer-streets/sample-09",
     "src": "/photos/02-midsummer-streets/sample-09.jpg",
+    "key": "edbb9c8e744081e9/v1",
     "width": 1600,
     "height": 1600,
     "dominantColor": "#b8a888",
@@ -92,6 +101,7 @@
   {
     "id": "02-midsummer-streets/sample-10",
     "src": "/photos/02-midsummer-streets/sample-10.jpg",
+    "key": "611764706971fce1/v1",
     "width": 1600,
     "height": 900,
     "dominantColor": "#788898",
@@ -102,6 +112,7 @@
   {
     "id": "02-midsummer-streets/sample-11",
     "src": "/photos/02-midsummer-streets/sample-11.jpg",
+    "key": "43624cd6a6405425/v1",
     "width": 1600,
     "height": 1067,
     "dominantColor": "#c8a898",
@@ -112,6 +123,7 @@
   {
     "id": "02-midsummer-streets/sample-12",
     "src": "/photos/02-midsummer-streets/sample-12.jpg",
+    "key": "ef56bb7780702ea8/v1",
     "width": 1067,
     "height": 1600,
     "dominantColor": "#889888",
@@ -122,6 +134,7 @@
   {
     "id": "02-midsummer-streets/sample-13",
     "src": "/photos/02-midsummer-streets/sample-13.jpg",
+    "key": "cd39684ea267086c/v1",
     "width": 1280,
     "height": 1600,
     "dominantColor": "#a898a8",
@@ -132,6 +145,7 @@
   {
     "id": "03-late-light/sample-14",
     "src": "/photos/03-late-light/sample-14.jpg",
+    "key": "f2c12ca16465e490/v1",
     "width": 1600,
     "height": 1600,
     "dominantColor": "#888878",
@@ -142,6 +156,7 @@
   {
     "id": "03-late-light/sample-15",
     "src": "/photos/03-late-light/sample-15.jpg",
+    "key": "41e223e3152a730c/v1",
     "width": 1600,
     "height": 900,
     "dominantColor": "#989888",
@@ -152,6 +167,7 @@
   {
     "id": "03-late-light/sample-16",
     "src": "/photos/03-late-light/sample-16.jpg",
+    "key": "507a0f1174370cff/v1",
     "width": 1600,
     "height": 1067,
     "dominantColor": "#b8a888",
@@ -162,6 +178,7 @@
   {
     "id": "03-late-light/sample-17",
     "src": "/photos/03-late-light/sample-17.jpg",
+    "key": "fd0a132b886a9bc5/v1",
     "width": 1067,
     "height": 1600,
     "dominantColor": "#788898",
@@ -172,6 +189,7 @@
   {
     "id": "03-late-light/sample-18",
     "src": "/photos/03-late-light/sample-18.jpg",
+    "key": "fd132b41cc83a843/v1",
     "width": 1280,
     "height": 1600,
     "dominantColor": "#c8a898",

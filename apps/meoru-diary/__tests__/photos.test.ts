@@ -3,6 +3,7 @@ import { getPhotos, groupByChapter, slugify, type Photo } from '@/lib/photos';
 const photo = (overrides: Partial<Photo>): Photo => ({
   id: 'x',
   src: '/photos/x.jpg',
+  key: '0000000000000000/v1',
   width: 3,
   height: 2,
   blurDataURL: 'data:image/webp;base64,AA==',

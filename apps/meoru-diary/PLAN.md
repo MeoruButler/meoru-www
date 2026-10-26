@@ -8,15 +8,16 @@ image-loading research lives in [docs/image-loading.md](docs/image-loading.md).
 
 ## Decisions (2026-09-09)
 
-| Topic            | Decision                                                                                                                                                                                      |
-| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Budget           | Free tiers only. Anything that needs a paid plan is out of scope until revisited.                                                                                                             |
-| Hosting          | Vercel Hobby. Because of its 5k/month image-transformation cap, the site must not depend on Vercel Image Optimization in production.                                                          |
-| Image storage    | Cloudflare R2 on a **new** Cloudflare account, created later. The Cloudflare account currently logged in on this machine's CLI belongs to another project and must not be used or modified.   |
-| Uploads          | A small admin page (presigned PUT to a private bucket, server-side sharp, publish to a public bucket). Deferred until the R2 account exists.                                                  |
-| Localization     | English default, plus Korean, Japanese, Simplified Chinese. Device language chooses the first visit; a manual choice is remembered in a cookie. Minimal switcher: four native-language links. |
-| Accessibility    | WCAG 2.2 AA as the floor, verified with axe in E2E. Everything reachable by keyboard; infinite scroll has a button alternative and a live status line.                                        |
-| Design ownership | The owner refines the visual design. This document records the direction; nothing here is final.                                                                                              |
+| Topic            | Decision                                                                                                                                                                                                                                                                                                                                                                                       |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Budget           | Free tiers only. Anything that needs a paid plan is out of scope until revisited.                                                                                                                                                                                                                                                                                                              |
+| Hosting          | Vercel Hobby. Because of its 5k/month image-transformation cap, the site must not depend on Vercel Image Optimization in production.                                                                                                                                                                                                                                                           |
+| Privacy          | The site is pseudonymous. Nothing on it or in this public repository may link to the owner's other identities: no shared domains or Cloudflare accounts, no names of other projects, no EXIF in published images.                                                                                                                                                                              |
+| Image storage    | Revised 2026-10-26: an R2 bucket on a dedicated Cloudflare account, served same-origin. Vercel proxies `/img/*` to the bucket's public URL, which lives only in the server-only `IMAGE_ORIGIN_URL`, so no custom domain is needed and the bucket host never appears in pages or this repository. A dedicated image domain can replace the proxy later by changing `NEXT_PUBLIC_IMAGE_CDN_URL`. |
+| Uploads          | A small admin page (presigned PUT to a private bucket, server-side sharp, publish to a public bucket). Deferred until the bucket exists.                                                                                                                                                                                                                                                       |
+| Localization     | English default, plus Korean, Japanese, Simplified Chinese. Device language chooses the first visit; a manual choice is remembered in a cookie. Minimal switcher: four native-language links.                                                                                                                                                                                                  |
+| Accessibility    | WCAG 2.2 AA as the floor, verified with axe in E2E. Everything reachable by keyboard; infinite scroll has a button alternative and a live status line.                                                                                                                                                                                                                                         |
+| Design ownership | The owner refines the visual design. This document records the direction; nothing here is final.                                                                                                                                                                                                                                                                                               |
 
 ## Concept
 
@@ -129,15 +130,24 @@ brief. Prototype one chapter both ways before deciding.
 The research recommended R2 + Cloudflare Image Transformations. On the free plan Transformations
 stop after 5,000 unique transforms per month, so the free-tier path is:
 
-1. **Pre-generate variants at upload time** with sharp (AVIF + WebP at 384/640/828/1080/1280/1600,
-   plus the 20 px blur and dominant color) and store them in the public R2 bucket. No runtime
-   transforms, no quota.
-2. **Loader maps width to a pre-generated file** (`<key>/w1080.avif`) instead of a transform URL.
-   `lib/image-loader.ts` will gain this mode; `format=auto` is replaced by `<picture>`-style
-   negotiation through `next/image` formats or by serving AVIF with WebP fallback keys.
+1. **Pre-generate variants** with sharp: AVIF (q60) and WebP (q80) at every width `next/image` can
+   request (256–1920), EXIF-rotated, metadata stripped. `pnpm photos:variants` writes
+   `.variants/<key>/w<width>.<format>` for upload; the 20 px blur and dominant color stay in the
+   manifest. No runtime transforms, no quota. **Done**; uploading waits for the bucket.
+2. **Static-key loader.** In CDN mode each sticker renders a `<picture>` whose AVIF and WebP
+   srcsets come from `getImageProps` with a per-format loader (`lib/image-variants.ts`), so the
+   browser negotiates the format and `/_next/image` is never called. **Done.**
 3. **Manifest** stays in the repo for now (`content/photos.json`). Once the admin page exists it
    moves to the private bucket and the site reads it at build time or through ISR.
-4. R2 free tier: 10 GB storage, 10 M reads/month, zero egress. Fine for this scale.
+4. R2 free tier on the dedicated account: 10 GB storage, 10 M reads/month, zero egress, all for
+   this site.
+5. **Same-origin proxy.** `NEXT_PUBLIC_IMAGE_CDN_URL=/img` plus `IMAGE_ORIGIN_URL=<bucket public
+URL>` makes `next.config.ts` rewrite `/img/*` to the bucket. Vercel caches the proxied files
+   (content-addressed, immutable), so the bucket's `r2.dev` URL, which Cloudflare rate-limits and
+   marks as non-production, only sees cache misses. Trade-offs: image traffic shares Vercel
+   Hobby's 100 GB/month Fast Data Transfer with the site, and upstream headers such as
+   `server: cloudflare` pass through (they reveal the CDN vendor, not the account). **Done**;
+   verified locally against a stand-in origin, not yet on Vercel.
 
 ## Admin upload page (later)
 
@@ -162,6 +172,9 @@ Planned shape:
 - Manual screen-reader pass (VoiceOver on macOS/iOS) once real photos and alt text exist; the
   automated checks are clean but cannot judge whether alt text is useful.
 - Detail view: none, lightbox, or a "peel off the page" interaction.
+- Where originals live before the admin app exists. They must stay out of this public repository
+  (EXIF and git history are permanent) and out of `public/` (deployed at full size with EXIF).
+  Likely a gitignored source folder outside `public/`, with local development reading `.variants/`.
 
 ## Roadmap
 
@@ -169,6 +182,7 @@ Planned shape:
 1. Localization (en/ko/ja/zh) and accessibility baseline. **Done.** Content fields in the manifest
    (chapter titles, alt, captions) still need per-locale variants.
 1. Sticker variants and texture layer behind a `variant` field; owner tunes the look.
-1. New Cloudflare account, R2 buckets, pre-generated variants, loader mode for static keys.
+1. Dedicated Cloudflare account, R2 bucket, pre-generated variants, static-key loader, same-origin
+   proxy. Variants, loader, and proxy **done**; account, bucket, and first upload pending.
 1. Admin upload app.
 1. About section content, metadata, OG image, analytics (free tier).

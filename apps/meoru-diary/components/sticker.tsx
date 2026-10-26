@@ -1,10 +1,11 @@
 'use client';
 
-import Image from 'next/image';
+import Image, { getImageProps, type ImageProps } from 'next/image';
 import * as React from 'react';
 
 import { cn } from '@meoru/ui/lib/utils';
 
+import { createVariantLoader } from '@/lib/image-variants';
 import type { Photo } from '@/lib/photos';
 import { getStickerPlacement } from '@/lib/sticker-layout';
 
@@ -24,6 +25,29 @@ const ALIGN_CLASS = {
   end: 'justify-self-end',
 } as const;
 
+type VariantPictureProps = Omit<ImageProps, 'src' | 'loader'> & {
+  base: string;
+  imageKey: string;
+  ref: React.Ref<HTMLImageElement>;
+};
+
+/**
+ * Pre-generated variants on the image CDN. A custom loader yields one URL per width, so AVIF and
+ * WebP each get their own srcset and the browser picks the first type it can decode.
+ */
+function VariantPicture({ base, imageKey, ref, onLoad, ...imageProps }: VariantPictureProps) {
+  const avif = getImageProps({ ...imageProps, src: imageKey, loader: createVariantLoader(base, 'avif') }).props;
+  const webp = getImageProps({ ...imageProps, src: imageKey, loader: createVariantLoader(base, 'webp') }).props;
+  return (
+    // `contents` keeps the img sized by the frame, exactly as in local mode.
+    <picture className="contents">
+      <source type="image/avif" srcSet={avif.srcSet} sizes={avif.sizes} />
+      {/* eslint-disable-next-line @next/next/no-img-element -- attributes come from getImageProps */}
+      <img {...webp} ref={ref} onLoad={onLoad} alt={webp.alt} />
+    </picture>
+  );
+}
+
 /**
  * One photo pasted into the diary. The box reserves the exact aspect ratio before any bytes
  * arrive (no layout shift), shows the dominant color plus a blurred inline preview instantly,
@@ -32,6 +56,8 @@ const ALIGN_CLASS = {
 export function Sticker({ photo, index, priority = false, lang }: StickerProps) {
   const [isLoaded, setIsLoaded] = React.useState(false);
   const placement = getStickerPlacement(index);
+  // Inlined at build time; `next.config.ts` already rejected malformed values.
+  const cdnBase = process.env.NEXT_PUBLIC_IMAGE_CDN_URL;
 
   // Images cached by the browser can finish before React attaches `onLoad`; check on mount.
   const handleImageRef = React.useCallback((element: HTMLImageElement | null) => {
@@ -39,6 +65,23 @@ export function Sticker({ photo, index, priority = false, lang }: StickerProps) 
       setIsLoaded(true);
     }
   }, []);
+
+  const imageProps = {
+    alt: photo.alt,
+    width: photo.width,
+    height: photo.height,
+    sizes: placement.sizes,
+    // Stickers only mount when they are within two viewports, so fetch immediately instead of
+    // waiting for the browser's native lazy threshold (~1250px on 4G).
+    loading: 'eager',
+    fetchPriority: priority ? 'high' : 'auto',
+    decoding: 'async',
+    onLoad: () => setIsLoaded(true),
+    className: cn(
+      'relative size-full object-cover transition-opacity duration-500 ease-out',
+      isLoaded ? 'opacity-100' : 'opacity-0'
+    ),
+  } satisfies Omit<ImageProps, 'src'>;
 
   return (
     <figure
@@ -65,25 +108,11 @@ export function Sticker({ photo, index, priority = false, lang }: StickerProps) 
           className="absolute inset-0 size-full scale-110 object-cover blur-xl"
           decoding="async"
         />
-        <Image
-          ref={handleImageRef}
-          src={photo.src}
-          alt={photo.alt}
-          width={photo.width}
-          height={photo.height}
-          sizes={placement.sizes}
-          quality={85}
-          // Stickers only mount when they are within two viewports, so fetch immediately instead of
-          // waiting for the browser's native lazy threshold (~1250px on 4G).
-          loading="eager"
-          fetchPriority={priority ? 'high' : 'auto'}
-          decoding="async"
-          onLoad={() => setIsLoaded(true)}
-          className={cn(
-            'relative size-full object-cover transition-opacity duration-500 ease-out',
-            isLoaded ? 'opacity-100' : 'opacity-0'
-          )}
-        />
+        {cdnBase ? (
+          <VariantPicture base={cdnBase} imageKey={photo.key} ref={handleImageRef} {...imageProps} />
+        ) : (
+          <Image ref={handleImageRef} src={photo.src} quality={85} {...imageProps} />
+        )}
       </div>
       {photo.caption ? (
         <figcaption className="mt-3 text-[11px] tracking-wide text-muted-foreground">{photo.caption}</figcaption>

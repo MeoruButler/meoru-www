@@ -8,8 +8,10 @@ import manifest from '@/content/photos.json';
 export type Photo = {
   /** Stable id, also used as the React key and the anchor for deep links. */
   id: string;
-  /** Path or CDN key passed to `next/image`. Local mode: `/photos/<file>`. */
+  /** Path under `public/`, served through the built-in optimizer when no image CDN is configured. */
   src: string;
+  /** Content-addressed key of the pre-generated variants on the image CDN (`lib/image-variants.ts`). */
+  key: string;
   width: number;
   height: number;
   /** Tiny inline placeholder rendered until the real image decodes. */
