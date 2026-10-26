@@ -6,6 +6,7 @@ import type { Photo } from '@/lib/photos';
 const photo: Photo = {
   id: 'spring/one',
   src: '/photos/spring/one.jpg',
+  key: '0123456789abcdef/v1',
   width: 1600,
   height: 1067,
   blurDataURL: 'data:image/webp;base64,AA==',
@@ -66,5 +67,50 @@ describe('Sticker', () => {
       complete.mockRestore();
       naturalWidth.mockRestore();
     }
+  });
+
+  it('passes the local photo path to next/image when no CDN is configured', () => {
+    const { container } = render(<Sticker photo={photo} index={0} />);
+    expect(container.querySelector('picture')).toBeNull();
+    expect(screen.getByRole('img', { name: 'Wet road at dawn' })).toHaveAttribute('src', '/photos/spring/one.jpg');
+  });
+
+  describe('with an image CDN', () => {
+    const original = process.env.NEXT_PUBLIC_IMAGE_CDN_URL;
+
+    beforeEach(() => {
+      process.env.NEXT_PUBLIC_IMAGE_CDN_URL = 'https://img.example.com/';
+    });
+
+    afterEach(() => {
+      if (original === undefined) delete process.env.NEXT_PUBLIC_IMAGE_CDN_URL;
+      else process.env.NEXT_PUBLIC_IMAGE_CDN_URL = original;
+    });
+
+    it('offers pre-generated AVIF first and falls back to WebP', () => {
+      const { container } = render(<Sticker photo={photo} index={0} />);
+      const source = container.querySelector('picture > source')!;
+      expect(source).toHaveAttribute('type', 'image/avif');
+      expect(source.getAttribute('srcset')).toContain('https://img.example.com/0123456789abcdef/v1/w640.avif 640w');
+      expect(source).toHaveAttribute('sizes', expect.stringContaining('vw'));
+
+      const image = screen.getByRole('img', { name: 'Wet road at dawn' });
+      expect(image.parentElement).toBe(source.parentElement);
+      expect(image.getAttribute('srcset')).toContain('https://img.example.com/0123456789abcdef/v1/w1920.webp 1920w');
+      expect(image.getAttribute('src')).toBe('https://img.example.com/0123456789abcdef/v1/w1920.webp');
+    });
+
+    it('keeps the layout reservation and fade-in behavior', () => {
+      render(<Sticker photo={photo} index={0} priority />);
+      const image = screen.getByRole('img', { name: 'Wet road at dawn' });
+      const frame = image.closest('[data-loaded]')!;
+      expect(frame).toHaveStyle({ aspectRatio: '1600 / 1067' });
+      expect(image).toHaveAttribute('width', '1600');
+      expect(image).toHaveAttribute('loading', 'eager');
+      expect(image).toHaveAttribute('fetchpriority', 'high');
+      fireEvent.load(image);
+      expect(image).toHaveClass('opacity-100');
+      expect(frame).toHaveAttribute('data-loaded', 'true');
+    });
   });
 });

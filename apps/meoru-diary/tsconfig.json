@@ -1,6 +1,8 @@
 {
   "extends": "@meoru/typescript-config/nextjs.json",
   "compilerOptions": {
+    // Build-time modules in `lib/` are also loaded by Node scripts, which need explicit extensions.
+    "allowImportingTsExtensions": true,
     "paths": {
       "@/*": ["./*"],
       "@meoru/ui/*": ["../../packages/ui/src/*"]

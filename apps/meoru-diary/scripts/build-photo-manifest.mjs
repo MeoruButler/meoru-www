@@ -10,10 +10,11 @@
  * Folder convention: `public/photos/<NN-chapter-name>/<file>.jpg`. Folders sort by name (use a
  * numeric prefix for ordering); the prefix is stripped and dashes become spaces for the title.
  *
- * When the photos move to a CDN, point `--src-prefix` at the bucket path instead of `/photos`.
- * The logic lives in `lib/photo-manifest.ts` (loaded through Node's built-in type stripping).
+ * Each entry also gets a content-addressed `key` for the CDN variants; run `pnpm photos:variants`
+ * afterwards to encode them. The logic lives in `lib/photo-manifest.ts` (loaded through Node's
+ * built-in type stripping).
  *
- * Usage: pnpm photos:manifest [--src-prefix /photos]
+ * Usage: pnpm photos:manifest
  */
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, join, relative } from 'node:path';
@@ -25,11 +26,8 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PHOTOS_DIR = join(ROOT, 'public', 'photos');
 const MANIFEST_PATH = join(ROOT, 'content', 'photos.json');
 
-const srcPrefixIndex = process.argv.indexOf('--src-prefix');
-const srcPrefix = srcPrefixIndex === -1 ? '/photos' : process.argv[srcPrefixIndex + 1];
-
 const existing = await loadExistingManifest(MANIFEST_PATH);
-const manifest = await buildManifest({ photosDir: PHOTOS_DIR, existing, srcPrefix });
+const manifest = await buildManifest({ photosDir: PHOTOS_DIR, existing });
 
 await mkdir(dirname(MANIFEST_PATH), { recursive: true });
 await writeFile(MANIFEST_PATH, `${JSON.stringify(manifest, null, 2)}\n`);

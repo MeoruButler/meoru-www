@@ -22,6 +22,7 @@ These instructions apply to the entire repository. A more specific `AGENTS.md` m
 - Do not add a dependency unless the task requires it. Commit `pnpm-lock.yaml` whenever dependency metadata changes.
 - Preserve existing user changes and never commit secrets, `.env` files, or generated outputs such as `.next`, `dist`, coverage, and Playwright reports.
 - Ask before changing public APIs, repository visibility, branch rules, CI secrets, or other external state unless the task explicitly requests it.
+- This public repository belongs to a pseudonymous project. Never mention the owner's other projects, repositories, domains, accounts, or real identity in files, commits, pull requests, or issues; describe such references generically, and keep infrastructure hostnames in deployment settings rather than in the repository.
 
 ## Language
 

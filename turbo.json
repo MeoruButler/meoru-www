@@ -16,7 +16,7 @@
         "out/**",
         "*.tsbuildinfo"
       ],
-      "env": ["NEXT_PUBLIC_*", "ANALYZE"]
+      "env": ["NEXT_PUBLIC_*", "IMAGE_ORIGIN_URL", "ANALYZE"]
     },
     "lint": {
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/.oxlintrc.json"],

@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import sharp from 'sharp';
@@ -15,6 +15,7 @@ import {
   loadExistingManifest,
   toHex,
 } from '@/lib/photo-manifest';
+import { photoKey } from '@/lib/photo-variants';
 import type { Photo } from '@/lib/photos';
 
 let dir: string;
@@ -106,6 +107,7 @@ describe('buildManifest', () => {
     expect(manifest[0]).toEqual({
       id: '01-spring/x',
       src: '/photos/01-spring/x.jpg',
+      key: photoKey(await readFile(join(dir, '01-spring', 'x.jpg'))),
       width: 3,
       height: 2,
       dominantColor: '#123456',
@@ -115,7 +117,7 @@ describe('buildManifest', () => {
     });
   });
 
-  it('keeps hand-written alt, caption, and chapter for unchanged ids and applies the src prefix', async () => {
+  it('keeps hand-written alt, caption, and chapter for unchanged ids', async () => {
     await writeSolid(join(dir, '01-spring', 'x.jpg'), 4, 4, [0, 0, 0]);
     await writeSolid(join(dir, '01-spring', 'y.jpg'), 4, 4, [0, 0, 0]);
     const existing = new Map<string, Photo>([
@@ -124,6 +126,7 @@ describe('buildManifest', () => {
         {
           id: '01-spring/x',
           src: '/old/x.jpg',
+          key: 'stale/v0',
           width: 1,
           height: 1,
           dominantColor: '#000000',
@@ -135,18 +138,14 @@ describe('buildManifest', () => {
       ],
     ]);
 
-    const manifest = await buildManifest({
-      photosDir: dir,
-      existing,
-      srcPrefix: 'https://img.example.com/diary/',
-      describe: fakeDescribe,
-    });
+    const manifest = await buildManifest({ photosDir: dir, existing, describe: fakeDescribe });
     expect(manifest[0]).toMatchObject({
-      src: 'https://img.example.com/diary/01-spring/x.jpg',
+      src: '/photos/01-spring/x.jpg',
+      key: photoKey(await readFile(join(dir, '01-spring', 'x.jpg'))),
       alt: 'Wet road at dawn',
       chapter: 'Spring drive, day one',
       caption: 'Seoul · rain',
-      // Measured fields always come from the file, never from the old manifest.
+      // Measured fields and the key always come from the file, never from the old manifest.
       width: 3,
       dominantColor: '#123456',
     });

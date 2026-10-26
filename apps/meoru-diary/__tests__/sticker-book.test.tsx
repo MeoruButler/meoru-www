@@ -33,6 +33,7 @@ function makeChapter(slug: string, title: string, count: number, offset: number)
   const photos: Photo[] = Array.from({ length: count }, (_, i) => ({
     id: `${slug}/${i}`,
     src: `/photos/${slug}/${i}.jpg`,
+    key: `${slug}-${i}/v1`,
     width: 3,
     height: 2,
     blurDataURL: 'data:image/webp;base64,AA==',

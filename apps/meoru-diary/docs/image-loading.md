@@ -2,13 +2,15 @@
 
 Scope: a Next.js 16 (App Router, React 19) portfolio whose home page is one very long,
 incrementally revealed grid of large photographs. Owner has no image host yet. Findings below
-drove the decisions in `next.config.ts`, `lib/image-loader.ts`, and `components/sticker.tsx`.
+drove the decisions in `next.config.ts`, `lib/image-variants.ts`, and `components/sticker.tsx`.
 
 ## Recommendation
 
-- **Hosting:** Cloudflare R2 for originals, custom domain on a Cloudflare zone, Cloudflare Image
-  Transformations for resizing and format negotiation. Wire into `next/image` with
-  `images.loader: 'custom'` + `loaderFile` (already in place; flip `NEXT_PUBLIC_IMAGE_CDN_URL`).
+- **Hosting (revised 2026-10):** Cloudflare R2 serving AVIF/WebP variants pre-generated with
+  sharp (`pnpm photos:variants`) through a `<picture>` per sticker, proxied same-origin under
+  `/img/*` by a Vercel rewrite so no custom domain is needed. The original pick, Cloudflare Image
+  Transformations, stops at 5,000 unique transforms a month on the free plan, so nothing is
+  resized at runtime. See README "Hosting modes".
 - **Placeholder:** tiny blurred WebP data URL plus dominant color, generated at manifest build time
   with sharp. ThumbHash is the alternative if payload size becomes an issue (store the 34-char hash
   and decode client-side).
@@ -61,8 +63,9 @@ Sources: [R2 pricing](https://developers.cloudflare.com/r2/pricing/) ·
   `deviceSizes` default unchanged (`640…3840`).
 - Local images with query strings require `images.localPatterns.search` in v16.
 - `images.domains` deprecated; use `remotePatterns` (accepts `URL` objects since 15.3).
-- With `images.loader: 'custom'`, `remotePatterns` is not consulted (it guards the built-in
-  optimizer). The pattern is still derived in `lib/image-cdn.ts` so switching back is a one-liner.
+- A `loader` passed to `getImageProps` bypasses the built-in optimizer, and `remotePatterns` is
+  not consulted (it only guards `/_next/image`). CDN mode relies on this instead of a global
+  `loaderFile`, because a loader returns one URL per width and therefore one format.
 - Verdict on pricing: bypass the Vercel optimizer once a transforming CDN exists. Vercel bills per
   transformation and cache read/write, and the Hobby cap fails loudly.
 
@@ -106,7 +109,8 @@ Sources: [ThumbHash](https://github.com/evanw/thumbhash) ·
 - Sizing here: stickers render at 19–43vw, so the srcset needs 256–640 px for phones and
   828–1600 px for 2x desktops. `deviceSizes: [640, 828, 1080, 1280, 1600, 1920]`,
   `imageSizes: [256, 384, 512]`. Anything above 1920 is wasted bytes for this layout.
-- Serve AVIF/WebP via `format=auto` (Accept negotiation, cached per format).
+- A static bucket cannot negotiate on `Accept`, so serve AVIF with a WebP fallback through
+  `<picture>`: one srcset per format, both built from `lib/image-variants.ts`.
 
 ## 5. Upload pipeline (when the CDN exists)
 
@@ -115,9 +119,9 @@ Sources: [ThumbHash](https://github.com/evanw/thumbhash) ·
 2. Upload with `@aws-sdk/client-s3` (`region: 'auto'`, endpoint
    `https://<account>.r2.cloudflarestorage.com`) or `rclone copy ./drop r2:bucket/photos`.
    Key by content hash for immutable caching.
-3. Append to `content/photos.json`, commit, deploy. `scripts/build-photo-manifest.mjs` already does
-   step 1 for local files and accepts `--src-prefix` for the bucket path; the upload step is the
-   only addition needed.
+3. Append to `content/photos.json`, commit, deploy. Implemented as `pnpm photos:manifest` (step 1
+   plus the content-hash key) and `pnpm photos:variants` (encoding); see README "Hosting modes" for
+   the upload command.
 
 Sources: [R2 with AWS SDK v3](https://developers.cloudflare.com/r2/examples/aws/aws-sdk-js-v3/) ·
 [R2 with rclone](https://developers.cloudflare.com/r2/examples/rclone/) ·

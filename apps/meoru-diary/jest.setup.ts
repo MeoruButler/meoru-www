@@ -12,9 +12,11 @@ type NextImageProps = React.ComponentPropsWithoutRef<'img'> & {
 };
 
 // Render `next/image` as a plain <img> so tests can assert on the DOM attributes that matter
-// (alt, width, height, sizes, loading, fetchpriority) without the optimizer.
+// (alt, width, height, sizes, loading, fetchpriority) without the optimizer. `getImageProps` stays
+// real so CDN srcsets are built exactly as in the browser.
 jest.mock('next/image', () => ({
   __esModule: true,
+  getImageProps: jest.requireActual<typeof import('next/image')>('next/image').getImageProps,
   default: React.forwardRef<HTMLImageElement, NextImageProps>(function MockNextImage(
     {
       priority: _priority,
